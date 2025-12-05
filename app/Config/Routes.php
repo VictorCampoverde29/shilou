@@ -18,3 +18,13 @@ $routes->group('', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('dashboard', 'Home::index');
 });
 
+$routes->group('servicios', ['filter' => 'AuthFilter'], function ($routes) {
+    $routes->get('index', 'ServiciosController::index');
+    $routes->get('obtener_areas', 'ServiciosController::obtenerAreas');
+    $routes->get('obtener_detalles', 'ServiciosController::obtenerDetalles');
+    $routes->post('editar', 'ServiciosController::update');
+    $routes->post('insertar_detalle', 'ServiciosController::insertar');
+    $routes->post('editar_detalle', 'ServiciosController::updateDetalle');
+    $routes->post('eliminar_detalle', 'ServiciosController::delete');
+});
+
