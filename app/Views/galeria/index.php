@@ -1,9 +1,59 @@
 <?= $this->extend('dashboard/template'); ?>
 <?= $this->section('styles'); ?>
 <link rel="stylesheet" href="<?= base_url('public/plugins/sweetalert2/sweetalert2.css') ?>">
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" />
+<link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css" rel="stylesheet">
 <style>
   .card-outline.card-oro {
     border-top: 3px solid #c89b5a !important;
+  }
+
+  .filepond--credits {
+    display: none !important;
+  }
+
+  .filepond--root {
+    background: #fff !important;
+    border: 2px solid #007bff !important;
+    /* azul */
+    border-radius: 10px;
+    box-shadow: none;
+    width: 300px;
+    /* más pequeño */
+    margin: 0 auto;
+  }
+
+  .filepond--drop-label {
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    padding: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 250px;
+    /* altura fija para centrar verticalmente */
+  }
+
+  .filepond--panel-root {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .filepond--drop-label label {
+    color: #007bff;
+    text-decoration: none;
+    /* sin subrayado por defecto */
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .filepond--drop-label label:hover,
+  .filepond--drop-label label:focus {
+    text-decoration: underline;
+    /* subrayado solo al pasar o seleccionar */
   }
 </style>
 <?= $this->endSection(); ?>
@@ -14,7 +64,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Servicios</h1>
+          <h1>Galería</h1>
         </div>
       </div>
     </div><!-- /.container-fluid -->
@@ -29,7 +79,7 @@
           <div class="col-12 col-sm-6">
             <div class="form-group">
               <label for="txttitulos"> Título:</label>
-              <input type="text" class="form-control"  autocomplete="off" placeholder="Título del Servicio" id="txttitulos">
+              <input type="text" class="form-control" autocomplete="off" placeholder="Título del Servicio" id="txttitulos">
             </div>
           </div>
           <div class="col-12 col-sm-6">
@@ -66,15 +116,18 @@
     <div class="card card-solid card-outline card-oro">
       <div class="card-header border-0">
         <div class="d-flex justify-content-between align-items-center">
-          <h5 class="card-title">Detalle Servicios</h5>
+          <h5 class="card-title">Catalogo</h5>
           <button type="button" class="btn btn-default" onclick="abrirModal()">+ Nuevo Card</button>
         </div>
       </div>
       <div class="card-body">
-        <nav>
-          <div class="nav nav-tabs" id="dynamic-tabs" role="tablist"></div>
-        </nav>
-        <div class="tab-content" id="dynamic-tab-content"></div>
+        <section class="content pb-3">
+          <div class="container-fluid h-100">
+            <div class="row" id="contenedorCards">
+              <!-- Aquí se cargarán los cards dinámicamente -->
+            </div>
+          </div>
+        </section>
       </div>
     </div>
     <!-- /.card -->
@@ -112,6 +165,8 @@
     </div>
   </div>
 </div>
+
+
 <?= $this->endSection(); ?>
 
 <?= $this->section('scripts'); ?>
@@ -121,5 +176,7 @@
 <script src="<?= base_url('public/plugins/jquery/jquery.min.js') ?>"></script>
 <script src="<?= base_url('public/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= base_url('public/plugins/sweetalert2/sweetalert2.js') ?>"></script>
-<script src="<?= base_url('public/dist/js/pages/servicios.js') ?>"></script>
+<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+<script src="<?= base_url('public/dist/js/pages/galeria.js') ?>"></script>
 <?= $this->endSection(); ?>

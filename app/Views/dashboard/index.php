@@ -1,6 +1,7 @@
 <?= $this->extend('Views/dashboard/template.php'); ?>
 
 <?= $this->section('styles'); ?>
+<link rel="stylesheet" href="<?= base_url('public/plugins/sweetalert2/sweetalert2.css') ?>">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <link rel="stylesheet" href="<?= base_url('public/plugins/fontawesome-free/css/all.min.css') ?>">
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -271,7 +272,6 @@
 </script>
 <script src="<?= base_url('public/plugins/jquery/jquery.min.js') ?>"></script>
 <script src="<?= base_url('public/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-<script src="<?= base_url('public/dist/js/adminlte.js?v=3.2.0') ?>"></script>
 <script src="<?= base_url('public/plugins/chart.js/Chart.min.js') ?>"></script>
 <script src="<?= base_url('public/dist/js/pages/dashboard.js') ?>"></script>
 <?= $this->endSection(); ?>
