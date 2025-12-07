@@ -106,70 +106,71 @@ class GaleriaController extends Controller
         }
     }
 
-    public function actualizarFotoDetalle()
+    public function updateGaleria()
     {
+        $model = new SeccionAreaDetModel();
         $iddetalle = $this->request->getPost('iddetalle');
-        $imagen = $this->request->getFile('imagen');
-        $imagen_actual = $this->request->getPost('imagen_actual');
+        $imagen = $this->request->getPost('imagen');
         $nombre = $this->request->getPost('nombre');
-        $titulo = $this->request->getPost('titulo');
 
-        if (!$iddetalle) {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Datos inválidos']);
+        // Si la imagen viene del explorador
+        if (strpos($imagen, 'data:image') === 0) {
+            // Extraer extensión
+            preg_match('/^data:image\/(\w+);base64,/', $imagen, $matches);
+            $extension = isset($matches[1]) ? $matches[1] : 'png';
+
+            $nombreSinExt = pathinfo($nombre, PATHINFO_FILENAME);
+            $nombreArchivo = $nombreSinExt . '.' . $extension;
+            $ruta = FCPATH . 'public/uploads/' . $nombreArchivo;
+
+            // Verificar si ya existe
+            if (file_exists($ruta)) {
+                return $this->response->setJSON(['error' => 'Ya existe una imagen con ese nombre en la galería.']);
+            }
+
+            // Guardar imagen
+            $base64 = preg_replace('/^data:image\/\w+;base64,/', '', $imagen);
+            $data = base64_decode($base64);
+            file_put_contents($ruta, $data);
+
+            $model->update($iddetalle, [
+                'url_foto' => 'public/uploads/' . $nombreArchivo,
+                'detalle' => $nombreArchivo
+            ]);
+            return $this->response->setJSON(['success' => true, 'message' => 'Imagen subida y datos actualizados']);
+        }
+        // Si la imagen viene de baseURL, solo actualizar la base de datos
+        if (strpos($imagen, base_url()) === 0) {
+            $model->update($iddetalle, [
+                'url_foto' => str_replace(base_url(), '', $imagen),
+                'detalle' => $nombre
+            ]);
+            return $this->response->setJSON(['success' => true, 'message' => 'Datos actualizados']);
         }
 
-        $model = new SeccionAreaDetModel();
-        $data = [
-            'titulo' => $titulo
-        ];
-
-        if ($imagen && $imagen->isValid() && !$imagen->hasMoved()) {
-            $nombreOriginal = $imagen->getName();
-            $imagen->move(ROOTPATH . 'public/uploads/', $nombreOriginal);
-            $ruta = 'public/uploads/' . $nombreOriginal;
-            $data['url_foto'] = $ruta;
-            $data['detalle'] = $nombreOriginal;
-        } elseif ($imagen_actual) {
-            $baseUrl = base_url();
-            $ruta = str_replace($baseUrl, '', $imagen_actual);
-            $data['url_foto'] = $ruta;
-            $data['detalle'] = basename($data['url_foto']);
-        }
-
-        try {
-            $model->update($iddetalle, $data);
-            return $this->response->setJSON(['status' => 'ok', 'ruta' => isset($data['url_foto']) ? $data['url_foto'] : null]);
-        } catch (\Exception $e) {
-            return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
-        }
+        return $this->response->setJSON(['error' => 'Formato de imagen no soportado']);
     }
 
-    public function renombrarImagenDetalle($iddetalle, $nuevoNombre)
+    public function eliminarImagenLocal()
     {
-        $model = new SeccionAreaDetModel();
-        $detalle = $model->find($iddetalle);
-        if (!$detalle || empty($detalle['url_foto'])) {
-            return ['status' => 'error', 'message' => 'Detalle o imagen no encontrada'];
+        $nombre = $this->request->getPost('nombre');
+        $ruta = FCPATH . 'public/uploads/' . $nombre;
+
+        if (file_exists($ruta) && is_file($ruta)) {
+            if (unlink($ruta)) {
+                // Opcional: Actualizar la base de datos si tienes referencia
+                $model = new SeccionAreaDetModel();
+                $model->where('url_foto', 'public/uploads/' . $nombre)->set(['url_foto' => '', 'detalle' => ''])->update();
+
+                return $this->response->setJSON(['success' => true, 'message' => 'Imagen eliminada correctamente']);
+            } else {
+                return $this->response->setJSON(['error' => 'No se pudo eliminar el archivo']);
+            }
+        } else {
+            return $this->response->setJSON(['error' => 'Archivo no encontrado']);
         }
-        $rutaActual = FCPATH . $detalle['url_foto'];
-        $dir = dirname($rutaActual) . '/';
-        $extension = pathinfo($rutaActual, PATHINFO_EXTENSION);
-        $nuevoNombreArchivo = $nuevoNombre . '.' . $extension;
-        $rutaNueva = $dir . $nuevoNombreArchivo;
-        $rutaActualFS = urldecode($rutaActual);
-        $rutaNuevaFS = urldecode($rutaNueva);
-        if (!file_exists($rutaActualFS)) {
-            return ['status' => 'error', 'message' => 'Archivo original no existe'];
-        }
-        if (file_exists($rutaNuevaFS)) {
-            return ['status' => 'error', 'message' => 'Ya existe un archivo con el nuevo nombre'];
-        }
-        if (!rename($rutaActualFS, $rutaNuevaFS)) {
-            return ['status' => 'error', 'message' => 'No se pudo renombrar el archivo'];
-        }
-        $model->update($iddetalle, ['url_foto' => 'public/uploads/' . $nuevoNombreArchivo]);
-        return ['status' => 'ok', 'ruta' => 'public/uploads/' . $nuevoNombreArchivo];
     }
+
     public function listarImagenesUploads()
     {
         $dir = FCPATH . 'public/uploads/';
@@ -184,11 +185,9 @@ class GaleriaController extends Controller
                         'nombre' => $archivo,
                         'url' => base_url('public/uploads/' . $archivo)
                     ];
-                    
                 }
             }
-        } 
+        }
         return $this->response->setJSON(['data' => $imagenes]);
     }
-    
 }

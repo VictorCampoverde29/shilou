@@ -37,7 +37,8 @@ $routes->group('galeria', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->post('editar_detalle', 'ServiciosController::updateDetalle');
     $routes->post('eliminar_detalle', 'ServiciosController::delete');
 
-  $routes->post('actualizarFotoDetalle', 'GaleriaController::actualizarFotoDetalle');
-  $routes->get('imagenes_locales', 'GaleriaController::listarImagenesUploads');
+    $routes->post('editar_galeria', 'GaleriaController::updateGaleria');
+    $routes->get('imagenes_locales', 'GaleriaController::listarImagenesUploads');
+    $routes->post('eliminar_imagen', 'GaleriaController::eliminarImagenLocal');
 });
 
