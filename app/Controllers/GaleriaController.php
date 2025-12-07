@@ -110,26 +110,85 @@ class GaleriaController extends Controller
     {
         $iddetalle = $this->request->getPost('iddetalle');
         $imagen = $this->request->getFile('imagen');
+        $imagen_actual = $this->request->getPost('imagen_actual');
+        $nombre = $this->request->getPost('nombre');
+        $titulo = $this->request->getPost('titulo');
 
-        if (!$iddetalle || !$imagen || !$imagen->isValid() || $imagen->hasMoved()) {
+        if (!$iddetalle) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Datos inválidos']);
         }
 
-        $nombreOriginal = $imagen->getName();
-        $imagen->move(ROOTPATH . 'public/uploads/', $nombreOriginal);
-        $ruta = 'public/uploads/' . $nombreOriginal;
-
         $model = new SeccionAreaDetModel();
         $data = [
-            'url_foto' => $ruta,
-            'comentario' => $nombreOriginal
+            'titulo' => $titulo
         ];
+
+        if ($imagen && $imagen->isValid() && !$imagen->hasMoved()) {
+            $nombreOriginal = $imagen->getName();
+            $imagen->move(ROOTPATH . 'public/uploads/', $nombreOriginal);
+            $ruta = 'public/uploads/' . $nombreOriginal;
+            $data['url_foto'] = $ruta;
+            $data['detalle'] = $nombreOriginal;
+        } elseif ($imagen_actual) {
+            $baseUrl = base_url();
+            $ruta = str_replace($baseUrl, '', $imagen_actual);
+            $data['url_foto'] = $ruta;
+            $data['detalle'] = basename($data['url_foto']);
+        }
 
         try {
             $model->update($iddetalle, $data);
-            return $this->response->setJSON(['status' => 'ok', 'ruta' => $ruta, 'nombre_original' => $nombreOriginal]);
+            return $this->response->setJSON(['status' => 'ok', 'ruta' => isset($data['url_foto']) ? $data['url_foto'] : null]);
         } catch (\Exception $e) {
             return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
+
+    public function renombrarImagenDetalle($iddetalle, $nuevoNombre)
+    {
+        $model = new SeccionAreaDetModel();
+        $detalle = $model->find($iddetalle);
+        if (!$detalle || empty($detalle['url_foto'])) {
+            return ['status' => 'error', 'message' => 'Detalle o imagen no encontrada'];
+        }
+        $rutaActual = FCPATH . $detalle['url_foto'];
+        $dir = dirname($rutaActual) . '/';
+        $extension = pathinfo($rutaActual, PATHINFO_EXTENSION);
+        $nuevoNombreArchivo = $nuevoNombre . '.' . $extension;
+        $rutaNueva = $dir . $nuevoNombreArchivo;
+        $rutaActualFS = urldecode($rutaActual);
+        $rutaNuevaFS = urldecode($rutaNueva);
+        if (!file_exists($rutaActualFS)) {
+            return ['status' => 'error', 'message' => 'Archivo original no existe'];
+        }
+        if (file_exists($rutaNuevaFS)) {
+            return ['status' => 'error', 'message' => 'Ya existe un archivo con el nuevo nombre'];
+        }
+        if (!rename($rutaActualFS, $rutaNuevaFS)) {
+            return ['status' => 'error', 'message' => 'No se pudo renombrar el archivo'];
+        }
+        $model->update($iddetalle, ['url_foto' => 'public/uploads/' . $nuevoNombreArchivo]);
+        return ['status' => 'ok', 'ruta' => 'public/uploads/' . $nuevoNombreArchivo];
+    }
+    public function listarImagenesUploads()
+    {
+        $dir = FCPATH . 'public/uploads/';
+        $imagenes = [];
+        if (is_dir($dir)) {
+            $archivos = scandir($dir);
+            foreach ($archivos as $archivo) {
+                if ($archivo === '.' || $archivo === '..') continue;
+                $ruta = $dir . $archivo;
+                if (is_file($ruta) && preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $archivo)) {
+                    $imagenes[] = [
+                        'nombre' => $archivo,
+                        'url' => base_url('public/uploads/' . $archivo)
+                    ];
+                    
+                }
+            }
+        } 
+        return $this->response->setJSON(['data' => $imagenes]);
+    }
+    
 }
