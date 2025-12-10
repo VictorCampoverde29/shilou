@@ -75,12 +75,47 @@
     <!-- Main Footer -->
     <?= $this->include('Views/dashboard/footer') ?>
   </div>
+  <!------------------------------------------------- MODAL NUEVA CONTRASEÑA -------------------------------------------------------------->
+  <div class="modal fade" id="mdlcambio" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalDefaultLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="background: rgba(249, 245, 240, 0.9);">
+          <h4 class="modal-title" id="modalDefaultLabel">Cambiar Contraseña</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-sm-12">
+            <input type="hidden" id="txtuser" name="txtuser">
+            <div class="form-group">
+              <label for="txtpasswordc">Ingrese su nueva contraseña</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="txtpasswordc" placeholder="Password" autocomplete="off">
+                <div class="input-group-append">
+                  <div class="input-group-text" style="cursor:pointer;" id="cambioIcono">
+                    <span class="fas fa-eye-slash" id="iconoPassword"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i> CANCELAR</button>
+          <button type="button" class="btn btn-primary" onclick="registrarDetalle()"><i class="fas fa-key"></i> CAMBIAR CLAVE</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- ./wrapper -->
   <!-- REQUIRED SCRIPTS -->
   <script src="<?= base_url('public/plugins/jquery/jquery.min.js') ?>"></script>
   <script src="<?= base_url('public/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
   <script src="<?= base_url('public/dist/js/adminlte.js?v=3.2.0') ?>"></script>
-  
+  <script src="<?= base_url('public/plugins/sweetalert2/sweetalert2.all.min.js') ?>"></script>
+  <script src="<?= base_url('public/dist/js/pages/generales.js') ?>"></script>
+
   <script>
     var baseURL = '<?= base_url(); ?>';
   </script>

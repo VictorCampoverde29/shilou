@@ -67,7 +67,7 @@ Shilou | Servicios
       </div>
     </div>
     <div class="card card-solid card-outline card-oro">
-      <div class="card-header border-0">
+      <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
           <h5 class="card-title">Detalle Servicios</h5>
           <button type="button" class="btn btn-default" onclick="abrirModal()">+ Nuevo Card</button>

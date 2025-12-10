@@ -50,3 +50,16 @@ $routes->group('testimonios', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->post('editar', 'TestimoniosController::update');
 });
 
+$routes->group('contacto', ['filter' => 'AuthFilter'], function ($routes) {
+    $routes->get('index', 'ContactoController::index');
+    $routes->get('obtener_areas', 'ContactoController::obtenerAreas');
+    $routes->post('editar', 'ContactoController::update');
+});
+
+$routes->group('head', ['filter' => 'AuthFilter'], function ($routes) {
+    $routes->get('index', 'HeadController::index');
+    $routes->get('obtener_areas', 'HeadController::obtenerAreas');
+    $routes->post('editar', 'HeadController::update');
+    $routes->post('editar_detalle', 'HeadController::updateDetalle');
+});
+

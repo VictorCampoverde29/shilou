@@ -34,7 +34,6 @@ function mostrarDetalles() {
         url: url,
         data: parametros,
         success: function (response) {
-            // Limpia los contenedores
             $('#dynamic-tabs').empty();
             $('#dynamic-tab-content').empty();
             response.forEach(function(item, idx) {
@@ -45,7 +44,6 @@ function mostrarDetalles() {
                       ${item.titulo}
                   </a>
               `);
-              // Tab content
               $('#dynamic-tab-content').append(`
                   <div class="tab-pane fade ${activeClass ? 'show active' : ''}" id="tab-${idx}" role="tabpanel" aria-labelledby="tab-${idx}-tab">
                       <form id="form-detalle-${idx}" data-iddetalle="${item.iddetalle}">

@@ -210,5 +210,4 @@ Shilou | Galería
 <script src="<?= base_url('public/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= base_url('public/plugins/sweetalert2/sweetalert2.js') ?>"></script>
 <script src="<?= base_url('public/dist/js/pages/galeria.js') ?>"></script>
-<script src="<?= base_url('public/dist/js/pages/generales.js') ?>"></script>
 <?= $this->endSection(); ?>

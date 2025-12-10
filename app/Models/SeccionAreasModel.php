@@ -8,7 +8,7 @@ class SeccionAreasModel extends Model
 {
     protected $table      = 'seccion_areas';
     protected $primaryKey = 'idarea';
-    protected $allowedFields = ['idarea', 'idseccion', 'titulo', 'titulo_resaltado', 'detalle', 'tipo_area', 'url_media', 'estado'];
+    protected $allowedFields = ['idarea', 'idseccion', 'titulo', 'titulo_resaltado', 'detalle', 'telefono', 'url_media', 'estado', 'direccion'];
 
     public function getAreasBySeccion($idseccion)
     {
