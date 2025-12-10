@@ -15,7 +15,7 @@ function mostrarDatos() {
              mostrarDetalles();
         },
         error: function () {
-            Swal.fire('Error', 'No se pudieron cargar los datos de la forma de pago', 'error');
+            Swal.fire('Error', 'No se pudieron cargar los datos del servicio', 'error');
         }
     });
 }

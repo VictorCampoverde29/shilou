@@ -16,12 +16,14 @@
     background: #fff;
     display: block;
   }
+
   /* Borde para las imágenes dentro de los cards */
   #contenedorCards .card-body img.img-fluid {
     border: 2px solid #a7a3a3ff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
+
   .card-outline.card-oro {
     border-top: 3px solid #c89b5a !important;
   }
@@ -49,13 +51,13 @@
           <div class="col-12 col-sm-6">
             <div class="form-group">
               <label for="txttitulos"> Título:</label>
-              <input type="text" class="form-control" autocomplete="off" placeholder="Título del Servicio" id="txttitulos">
+              <input type="text" class="form-control" autocomplete="off" placeholder="Título de la Galería" id="txttitulos">
             </div>
           </div>
           <div class="col-12 col-sm-6">
             <div class="form-group">
               <label for="txttituloresaltado"> Título Subrayado:</label>
-              <input type="text" class="form-control" id="txttituloresaltado" autocomplete="off" placeholder="Título Subrayado del Servicio">
+              <input type="text" class="form-control" id="txttituloresaltado" autocomplete="off" placeholder="Título Subrayado de la Galería">
             </div>
           </div>
         </div>
@@ -63,7 +65,7 @@
           <div class="col-12 col-sm-12">
             <div class="form-group">
               <label for="txtdetalles"> Detalle:</label>
-              <textarea class="form-control mb-3" id="txtdetalles" autocomplete="off" placeholder="Detalle del Servicio"></textarea>
+              <textarea class="form-control mb-3" id="txtdetalles" autocomplete="off" placeholder="Detalle de la Galería"></textarea>
             </div>
           </div>
         </div>
@@ -84,7 +86,7 @@
       </div>
     </div>
     <div class="card card-solid card-outline card-oro">
-      <div class="card-header border-0">
+      <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
           <h5 class="card-title">Catalogo</h5>
           <button type="button" class="btn btn-default" onclick="abrirModal()">+ Nuevo Card</button>
@@ -109,52 +111,37 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header" style="background: rgba(249, 245, 240, 0.9);">
-        <h4 class="modal-title" id="modalDefaultLabel">Agregar nuevo Servicio</h4>
+        <h4 class="modal-title" id="modalDefaultLabel">Agregar nuevo Card</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="col-12 col-sm-12">
-            <div class="card card-row card-warning">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <label class="form-label d-block">Imagen</label>
-                            <input type="hidden" id="txtidgaleria" name="txtidgaleria" value="">
-                            <img src="" alt="" class="img-fluid" data-original="" style="max-height:200px;object-fit:cover;">
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-12">
-                            <input type="text" class="form-control form-control-sm" id="txtnombre" readonly placeholder="Nombre de la imagen">
-                        </div>
-                    </div>
-                    <div class="row mb-2 justify-content-center">
-                        <div class="col-12 d-flex justify-content-between">
-                            <div>
-                                <label for="txtimagen" class="form-label"></label>
-                                <input type="file" accept="image/*" class="d-none" data-iddetalle="${item.iddetalle}" id="txtimagen">
-                                <button type="button" class="btn btn-default btn-sm" data-iddetalle="${item.iddetalle}" title="Explorador de Archivos" onclick="abrirExplorador(this)">
-                                    <i class="fas fa-folder-open"></i> ARCHIVOS
-                                </button>
-                            </div>
-                            <div>
-                                <button type="button" class="btn btn-default btn-sm" onclick="abrirModalLocal(this)" title="Imágenes guardadas">
-                                    <i class="fas fa-images"></i> GALERIA
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row mb-3 justify-content-center">
-                        <div class="col-12">
-                            <label for="txtdetalle" class="form-label">Título</label>
-                            <input type="text" class="form-control" placeholder="Título de la imagen" id="txtdetalle">
-                        </div>
-                    </div>
-                </div>
+        <div class="col-sm-12">
+          <input type="hidden" id="iddetalle" name="iddetalle">
+          <div class="form-group">
+            <label for="fileimg">Imagen</label>
+            <div class="row justify-content-between mb-2">
+              <div class="col-sm-6">
+                <button type="button" class="btn btn-default btn-sm btn-block" id="btnimg" onclick="document.getElementById('fileimg').click();">
+                  <i class="fas fa-folder-open"></i> ARCHIVOS
+                </button>
+              </div>
+              <div class="col-sm-6">
+                <button type="button" class="btn btn-default btn-sm btn-block" id="btngaleria" onclick="abrirGaleria()">
+                  <i class="fas fa-images"></i> GALERÍA
+                </button>
+              </div>
             </div>
+            <img class="img-fluid" style="width:100%;height:200px;object-fit:cover;" id="img">
+            <input type="file" class="d-none" id="fileimg" accept="image/*">
+            <input type="hidden" class="form-control mb-2" id="txturl" readonly>
+            <input type="text" class="form-control mb-2" id="txtdetalle" placeholder="Sube tu imagen..." readonly>
+          </div>
+          <div class="form-group">
+            <label for="txttitulo">Título</label>
+            <input type="text" class="form-control" id="txttitulo" name="txttitulo" autocomplete="off" placeholder="Título del Card">
+          </div>
         </div>
       </div>
       <div class="modal-footer justify-content-between">

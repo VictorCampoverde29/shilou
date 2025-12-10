@@ -11,13 +11,13 @@
         <li class="nav-item">
           <a href="<?= base_url('servicios/index') ?>" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
-            <p>Servicios</p>
+            <p>SERVICIOS</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="<?= base_url('galeria/index') ?>" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
-            <p>Galeria</p>
+            <p>GALERIA</p>
           </a>
         </li>
         <li class="nav-item">

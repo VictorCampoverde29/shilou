@@ -15,7 +15,7 @@ class GaleriaController extends Controller
     public function obtenerAreas()
     {
         $seccionAreasModel = new SeccionAreasModel();
-        $areas = $seccionAreasModel->getAreasBySeccion(1); // SERVICIOS
+        $areas = $seccionAreasModel->getAreasBySeccion(2); // GALERIA
         return $this->response->setJSON($areas);
     }
     public function obtenerDetalles()
@@ -34,7 +34,7 @@ class GaleriaController extends Controller
         $detalle = $this->request->getPost('detalle');
 
         if ($model->exists($titulo, $idarea)) {
-            return $this->response->setJSON(['error' => 'La forma de pago ingresada ya existe']);
+            return $this->response->setJSON(['error' => 'El nombre ingresado ya existe']);
         }
 
         $data = [
@@ -45,9 +45,9 @@ class GaleriaController extends Controller
 
         try {
             $model->update($idarea, $data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Servicio actualizada exitosamente.']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Galería actualizada exitosamente.']);
         } catch (\Exception $e) {
-            return $this->response->setJSON(['error' => 'Ocurrió un error al actualizar el servicio: ' . $e->getMessage()]);
+            return $this->response->setJSON(['error' => 'Ocurrió un error al actualizar la galería: ' . $e->getMessage()]);
         }
     }
     public function insertar()
@@ -56,42 +56,44 @@ class GaleriaController extends Controller
         $idarea = $this->request->getPost('idarea');
         $titulo = $this->request->getPost('titulo');
         $detalle = $this->request->getPost('detalle');
-        $icono_svg = $this->request->getPost('icono_svg');
+        $url_foto = $this->request->getPost('url_foto');
         $estado = $this->request->getPost('estado');
 
+        // VALIDACION Y GUARDADO DE IMAGEN
+        if (strpos($url_foto, 'data:image') === 0) {
+            preg_match('/^data:image\/(\w+);base64,/', $url_foto, $matches);
+            $extension = isset($matches[1]) ? $matches[1] : 'png';
+
+            $nombreSinExt = pathinfo($detalle, PATHINFO_FILENAME);
+            $nombreArchivo = $nombreSinExt . '.' . $extension;
+            $ruta = FCPATH . 'public/uploads/' . $nombreArchivo;
+
+            if (file_exists($ruta)) {
+                return $this->response->setJSON(['error' => 'Ya existe una imagen con ese nombre en la galería.']);
+            }
+
+            // GUARDAR IMAGEN
+            $base64 = preg_replace('/^data:image\/\w+;base64,/', '', $url_foto);
+            $data = base64_decode($base64);
+            file_put_contents($ruta, $data);
+
+            $url_foto = 'public/uploads/' . $nombreArchivo;
+            $detalle = $nombreArchivo;
+        } elseif (strpos($url_foto, base_url()) === 0) {
+            $url_foto = str_replace(base_url(), '', $url_foto);
+        }
         $data = [
             'idarea' => $idarea,
             'titulo' => $titulo,
             'detalle' => $detalle,
-            'icono_svg' => $icono_svg,
+            'url_foto' => $url_foto,
             'estado' => $estado
         ];
         try {
             $model->insert($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Detalle de servicio registrado exitosamente.']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Detalle de galería registrado exitosamente.']);
         } catch (\Exception $e) {
-            return $this->response->setJSON(['error' => 'Ocurrió un error al registrar el detalle de servicio: ' . $e->getMessage()]);
-        }
-    }
-    public function updateDetalle()
-    {
-        $model = new SeccionAreaDetModel();
-        $iddetalle = $this->request->getPost('iddetalle');
-        $titulo = $this->request->getPost('titulo');
-        $detalle = $this->request->getPost('detalle');
-        $icono_svg = $this->request->getPost('icono_svg');
-
-        $data = [
-            'titulo' => $titulo,
-            'detalle' => $detalle,
-            'icono_svg' => $icono_svg,
-        ];
-
-        try {
-            $model->update($iddetalle, $data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Detalle de servicio actualizado exitosamente.']);
-        } catch (\Exception $e) {
-            return $this->response->setJSON(['error' => 'Ocurrió un error al actualizar el detalle de servicio: ' . $e->getMessage()]);
+            return $this->response->setJSON(['error' => 'Ocurrió un error al registrar el detalle de galería: ' . $e->getMessage()]);
         }
     }
     public function delete()
@@ -112,10 +114,11 @@ class GaleriaController extends Controller
         $iddetalle = $this->request->getPost('iddetalle');
         $imagen = $this->request->getPost('imagen');
         $nombre = $this->request->getPost('nombre');
+        $titulo = $this->request->getPost('titulo');
 
-        // Si la imagen viene del explorador
+        // SI LA IMAGEN VIENE DEL EXPLORADOR
         if (strpos($imagen, 'data:image') === 0) {
-            // Extraer extensión
+            // EXTRAER EXTENSION
             preg_match('/^data:image\/(\w+);base64,/', $imagen, $matches);
             $extension = isset($matches[1]) ? $matches[1] : 'png';
 
@@ -123,27 +126,28 @@ class GaleriaController extends Controller
             $nombreArchivo = $nombreSinExt . '.' . $extension;
             $ruta = FCPATH . 'public/uploads/' . $nombreArchivo;
 
-            // Verificar si ya existe
             if (file_exists($ruta)) {
                 return $this->response->setJSON(['error' => 'Ya existe una imagen con ese nombre en la galería.']);
             }
 
-            // Guardar imagen
+            // GUARDAR IMAGEN
             $base64 = preg_replace('/^data:image\/\w+;base64,/', '', $imagen);
             $data = base64_decode($base64);
             file_put_contents($ruta, $data);
 
             $model->update($iddetalle, [
                 'url_foto' => 'public/uploads/' . $nombreArchivo,
-                'detalle' => $nombreArchivo
+                'detalle' => $nombreArchivo,
+                'titulo' => $titulo
             ]);
             return $this->response->setJSON(['success' => true, 'message' => 'Imagen subida y datos actualizados']);
         }
-        // Si la imagen viene de baseURL, solo actualizar la base de datos
+        // SI LA IMAGEN VIENE DE BASEURL, SOLO ACTUALIZAR LA BASE DE DATOS
         if (strpos($imagen, base_url()) === 0) {
             $model->update($iddetalle, [
                 'url_foto' => str_replace(base_url(), '', $imagen),
-                'detalle' => $nombre
+                'detalle' => $nombre,
+                'titulo' => $titulo
             ]);
             return $this->response->setJSON(['success' => true, 'message' => 'Datos actualizados']);
         }
@@ -158,7 +162,6 @@ class GaleriaController extends Controller
 
         if (file_exists($ruta) && is_file($ruta)) {
             if (unlink($ruta)) {
-                // Opcional: Actualizar la base de datos si tienes referencia
                 $model = new SeccionAreaDetModel();
                 $model->where('url_foto', 'public/uploads/' . $nombre)->set(['url_foto' => '', 'detalle' => ''])->update();
 

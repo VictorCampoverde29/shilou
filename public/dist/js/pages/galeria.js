@@ -1,19 +1,41 @@
 let iddetalleSeleccionado = null;
 
 $(document).ready(function () {
-    mostrarDatosX();
+    mostrarDatos();
 });
 
+function mostrarDatos() {
+    const url = baseURL + 'galeria/obtener_areas';
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (response) {
+            $('#txtid').val(response[0].idarea);
+            $('#txttitulos').val(response[0].titulo);
+            $('#txttituloresaltado').val(response[0].titulo_resaltado);
+            $('#txtdetalles').val(response[0].detalle);
+             mostrarDetalles();
+        },
+        error: function () {
+            Swal.fire('Error', 'No se pudieron cargar los datos de la galería', 'error');
+        }
+    });
+}
 
-function mostrarDatosX() {
-    var parametros = 'idarea=' + 2;
+function limpiar() {
+    $('#txttitulos').val('');
+    $('#txttituloresaltado').val('');
+    $('#txtdetalles').val('');
+}
+
+function mostrarDetalles() {
+    var parametros = 'idarea=' + $('#txtid').val();
     const url = baseURL + 'galeria/obtener_detalles';
     $.ajax({
         type: "GET",
         url: url,
         data: parametros,
         success: function (response) {
-            console.log('Datos de la galería:', response);
             renderizarCards(response);
         },
         error: function () {
@@ -29,33 +51,49 @@ function renderizarCards(datos) {
         html += `
             <div class="col-sm-3">
                 <div class="card mb-3" id="card-${item.iddetalle}">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="card-title mb-0">${item.titulo}</h5>
+                    </div>
                     <div class="card-body">
                         <input type="hidden" id="iddetalle${item.iddetalle}" name="iddetalle${item.iddetalle}" value="${item.iddetalle}">
-                        <div class="form-group mb-2 text-center">
-                            <img src="${imgSrc}" alt="${item.detalle}" class="img-fluid mb-2" style="width:100%;height:200px;object-fit:cover;" data-original="${imgSrc}" id="img${item.iddetalle}">
+                        <div class="form-group">
+                            <label for="fileimg${item.iddetalle}">Imagen</label>
+                            <img src="${imgSrc}" alt="${item.detalle}" class="img-fluid" style="width:100%;height:200px;object-fit:cover;" data-original="${imgSrc}" id="img${item.iddetalle}">
                             <input type="file" class="d-none" id="fileimg${item.iddetalle}" accept="image/*">
-                            <div class="row mb-2">
-                                <div class="col-6 pr-1">
-                                    <button type="button" class="btn btn-primary btn-block" id="btnimg${item.iddetalle}" onclick="document.getElementById('fileimg${item.iddetalle}').click();">
-                                        Archivos
+                            <div class="col-sm-12">
+                                <div class="row justify-content-between mb-2">
+                                    <button type="button" class="btn btn-default btn-sm" id="btnimg${item.iddetalle}" onclick="document.getElementById('fileimg${item.iddetalle}').click();">
+                                        <i class="fas fa-folder-open"></i> ARCHIVOS
                                     </button>
-                                </div>
-                                <div class="col-6 pl-1">
-                                    <button type="button" class="btn btn-secondary btn-block" id="btngaleria${item.iddetalle}" onclick="abrirGaleria(${item.iddetalle})">
-                                        Galería
+                                    <button type="button" class="btn btn-default btn-sm" id="btngaleria${item.iddetalle}" onclick="abrirGaleria(${item.iddetalle})">
+                                        <i class="fas fa-images"></i> GALERÍA
                                     </button>
                                 </div>
                             </div>
-                            <input type="text" class="form-control mb-2" id="txturl${item.iddetalle}" value="${imgSrc}" readonly>
-                            <input type="text" class="form-control mb-2" id="txtdetalle${item.iddetalle}" value="${item.detalle}" readonly>
+                            <input type="hidden" class="form-control mb-2" id="txturl${item.iddetalle}" value="${imgSrc}" readonly>
+                            <input type="hidden" class="form-control mb-2" id="txtdetalle${item.iddetalle}" value="${item.detalle}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="txttitulo${item.iddetalle}">Título</label>
-                            <input type="text" class="form-control" id="txttitulo${item.iddetalle}" name="txttitulo${item.iddetalle}" value="${item.titulo}">
+                            <input type="text" class="form-control" id="txttitulo${item.iddetalle}" name="txttitulo${item.iddetalle}" autocomplete="off" value="${item.titulo}" data-titulo="${item.titulo}">
                         </div>
-                        <button type="button" class="btn btn-success btn-block mt-3" id="btnGuardar${item.iddetalle}" onclick="editarDatos(${item.iddetalle})">
-                            Guardar
-                        </button>
+                        <div class="col-sm-12">
+                            <div class="row justify-content-between mt-3">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-flat mr-1" id="btnGuardar${item.iddetalle}" title="GUARDAR" onclick="editarDatos(${item.iddetalle})">
+                                    <i class="fas fa-save"></i> GUARDAR
+                                </button>
+                                </div>
+                                <div class="form-group">
+                                <button type="button" class="btn btn-secondary btn-flat" id="btnCancelar${item.iddetalle}" title="CANCELAR" onclick="cancelarEdicion(${item.iddetalle})">
+                                    <i class="fas fa-reply"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-flat" id="btnEliminar${item.iddetalle}" title="ELIMINAR" onclick="eliminarDetalle(${item.iddetalle})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,13 +114,75 @@ function renderizarCards(datos) {
             }
         });
     });
+
+    $('#fileimg').off('change').on('change', function () {
+    const input = this;
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            $('#img').attr('src', e.target.result).removeClass('d-none');
+            $('#txturl').val(e.target.result);
+            $('#txtdetalle').val(input.files[0].name);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+});
 }
 
-function abrirGaleria(iddetalle) {
-    iddetalleSeleccionado = iddetalle; // Guardar el iddetalle del card activo
-    $('#mdlGaleriaLocal').attr('data-iddetalle', iddetalle); // Asignar id al modal para referencia
+function cancelarEdicion(iddetalle) {
+    const img = $(`#img${iddetalle}`);
+    const originalSrc = img.attr('data-original');
+    img.attr('src', originalSrc);
+    $(`#txturl${iddetalle}`).val(originalSrc);
+    const originalDetalle = img.attr('alt');
+    $(`#txtdetalle${iddetalle}`).val(originalDetalle);
+    const originalTitulo = $(`#txttitulo${iddetalle}`).attr('data-titulo');
+    if (originalTitulo !== undefined) {
+        $(`#txttitulo${iddetalle}`).val(originalTitulo);
+    }
+    Swal.fire('Cancelado', 'Los cambios han sido revertidos.', 'info');
+}
+
+function abrirGaleria(iddetalle = null) {
+    if (iddetalle) {
+        iddetalleSeleccionado = iddetalle;
+        $('#mdlGaleriaLocal').attr('data-iddetalle', iddetalle);
+    } else {
+        iddetalleSeleccionado = null;
+        $('#mdlGaleriaLocal').attr('data-iddetalle', 'nuevo');
+    }
     $('#mdlGaleriaLocal').modal('show');
     getImagenesLocales();
+}
+
+function eliminarDetalle(iddetalle) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción eliminará el detalle de la galería.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: baseURL + "galeria/eliminar_detalle",
+                data: { iddetalle: iddetalle },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire('Eliminado', response.message, 'success');
+                        mostrarDetalles();
+                    } else {
+                        Swal.fire('Error', response.error || 'No se pudo eliminar el detalle', 'error');
+                    }
+                },
+                error: function () {
+                    Swal.fire('Error', 'No se pudo eliminar el detalle', 'error');
+                }
+            });
+        }
+    });
 }
 
 function getImagenesLocales() {
@@ -97,7 +197,6 @@ function getImagenesLocales() {
             'url': url,
             'method': 'GET',
             'dataSrc': function (json) {
-                console.log(json);
                 return json.data;
             }
         },
@@ -129,22 +228,29 @@ function getImagenesLocales() {
 }
 
 function seleccionarImagen(data) {
-    // data: {nombre, url}
-    if (!iddetalleSeleccionado) return;
-    // Cambiar imagen, url y detalle en el card correspondiente
-    $(`#img${iddetalleSeleccionado}`).attr('src', data.url);
-    $(`#txturl${iddetalleSeleccionado}`).val(data.url);
-    $(`#txtdetalle${iddetalleSeleccionado}`).val(data.nombre);
-    $('#mdlGaleriaLocal').modal('hide');
+    const iddetalle = $('#mdlGaleriaLocal').attr('data-iddetalle');
+    if (iddetalle === 'nuevo') {
+        $('#img').attr('src', data.url).removeClass('d-none');
+        $('#txturl').val(data.url);
+        $('#txtdetalle').val(data.nombre);
+        $('#mdlGaleriaLocal').modal('hide');
+    } else if (iddetalleSeleccionado) {
+        $(`#img${iddetalleSeleccionado}`).attr('src', data.url);
+        $(`#txturl${iddetalleSeleccionado}`).val(data.url);
+        $(`#txtdetalle${iddetalleSeleccionado}`).val(data.nombre);
+        $('#mdlGaleriaLocal').modal('hide');
+    }
 }
 
 function abrirModal() {
     $('#mdldetalle').modal('show');
+    limpiarModal();
 }
 
 function editarDatos(iddetalle) {
     const imagen = $(`#txturl${iddetalle}`).val();
     const nombre = $(`#txtdetalle${iddetalle}`).val();
+    const titulo = $(`#txttitulo${iddetalle}`).val();
 
     if (!imagen || imagen === baseURL) {
         Swal.fire('Imagen requerida', 'Debe seleccionar o cargar una imagen.', 'warning');
@@ -154,8 +260,11 @@ function editarDatos(iddetalle) {
         Swal.fire('Nombre requerido', 'Debe seleccionar o cargar una imagen válida.', 'warning');
         return;
     }
+    if (!titulo) {
+        Swal.fire('Título requerido', 'El título es obligatorio.', 'warning');
+        return;
+    }
 
-    // Validar extensión de imagen
     const extensionesValidas = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'];
     const extension = nombre.split('.').pop().toLowerCase();
 
@@ -170,12 +279,13 @@ function editarDatos(iddetalle) {
         data: {
             iddetalle: iddetalle,
             imagen: imagen,
-            nombre: nombre
+            nombre: nombre,
+            titulo: titulo
         },
         success: function (response) {
             if (response.success) {
                 Swal.fire('Actualizar Datos', response.message, 'success');
-                mostrarDatosX(); // Recargar los cards
+                mostrarDetalles();
             } else {
                 Swal.fire('Actualizar Datos', response.error || 'No se pudo guardar el detalle', 'warning');
             }
@@ -204,7 +314,7 @@ function eliminarImagenLocal(nombre) {
                     if (response.success) {
                         Swal.fire('Eliminado', response.message, 'success');
                         getImagenesLocales();
-                        mostrarDatosX();
+                        mostrarDetalles();
                     } else {
                         Swal.fire('Error', response.error || 'No se pudo eliminar la imagen', 'error');
                     }
@@ -213,6 +323,116 @@ function eliminarImagenLocal(nombre) {
                     Swal.fire('Error', 'No se pudo eliminar la imagen', 'error');
                 }
             });
+        }
+    });
+}
+
+function registrarDetalle() {
+    if ($('#txturl').val() === '') {
+        Swal.fire('Agregar Galería', 'La imagen es obligatoria', 'warning');
+        $('#txturl').focus();
+        return;
+    }
+    if ($('#txtdetalle').val() === '') {
+        Swal.fire('Agregar Galería', 'El nombre de la imagen es obligatoria', 'warning');
+        $('#txtdetalle').focus();
+        return;
+    }
+    if ($('#txttitulo').val() === '') {
+        Swal.fire('Agregar Galería', 'El título es obligatorio', 'warning');
+        $('#txttitulo').focus();
+        return;
+    }
+    var parametros = {
+        idarea: 2,
+        titulo: $('#txttitulo').val(),
+        detalle: $('#txtdetalle').val(),
+        url_foto: $('#txturl').val(),
+        estado: 'ACTIVO'
+    };
+    $.ajax({
+        type: "POST",
+        url: baseURL + 'galeria/insertar_detalle',
+        data: parametros,
+        success: function (response) {
+            if (response.error) {
+                Swal.fire({
+                    icon: "error",
+                    title: 'Agregar Galería',
+                    text: response.error
+                });
+            }
+            else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Agregar Galería',
+                    text: response.message,
+                }).then(function () {
+                    mostrarDetalles();
+                    $('#mdldetalle').modal('hide');
+                });
+            }
+        },
+        error: function () {
+            Swal.fire('Error', 'Ha ocurrido un error al registrar la galería', 'error');
+        }
+    });
+}
+
+function limpiarModal() {
+    $('#iddetalle').val('');
+    $('#img').removeAttr('src').addClass('d-none');
+    $('#txturl').val('');
+    $('#txtdetalle').val('');
+    $('#txttitulo').val('');
+}
+
+function editar() {
+    if ($('#txttitulos').val() === '') {
+        Swal.fire('Guardar Galería', 'El título es obligatorio', 'warning');
+        $('#txttitulos').focus();
+        return;
+    }
+    if ($('#txttituloresaltado').val() === '') {
+        Swal.fire('Guardar Galería', 'El título subrayado es obligatorio', 'warning');
+        $('#txttituloresaltado').focus();
+        return;
+    }
+    if ($('#txtdetalles').val() === '') {
+        Swal.fire('Guardar Galería', 'El detalle es obligatorio', 'warning');
+        $('#txtdetalles').focus();
+        return;
+    }
+    var parametros = {
+        cod: $('#txtid').val(),
+        titulo: $('#txttitulos').val(),
+        titulo_resaltado: $('#txttituloresaltado').val(),
+        detalle: $('#txtdetalles').val()
+    };
+    $.ajax({
+        type: "POST",
+        url: baseURL + 'galeria/editar',
+        data: parametros,
+        success: function (response) {
+            if (response.error) {
+                Swal.fire({
+                    icon: "error",
+                    title: 'Guardar Galería',
+                    text: response.error
+                });
+            }
+            else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Guardar Galería',
+                    text: response.message,
+                }).then(function () {
+                    mostrarDatos();
+                });
+            }
+        },
+        error: function () {
+            Swal.fire('Error', 'Ha ocurrido un error al editar la empresa', 'error');
         }
     });
 }

@@ -30,13 +30,11 @@ $routes->group('servicios', ['filter' => 'AuthFilter'], function ($routes) {
 
 $routes->group('galeria', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('index', 'GaleriaController::index');
-    $routes->get('obtener_areas', 'ServiciosController::obtenerAreas');
+    $routes->get('obtener_areas', 'GaleriaController::obtenerAreas');
     $routes->get('obtener_detalles', 'GaleriaController::obtenerDetalles');
-    $routes->post('editar', 'ServiciosController::update');
-    $routes->post('insertar_detalle', 'ServiciosController::insertar');
-    $routes->post('editar_detalle', 'ServiciosController::updateDetalle');
-    $routes->post('eliminar_detalle', 'ServiciosController::delete');
-
+    $routes->post('editar', 'GaleriaController::update');
+    $routes->post('eliminar_detalle', 'GaleriaController::delete');
+    $routes->post('insertar_detalle', 'GaleriaController::insertar');
     $routes->post('editar_galeria', 'GaleriaController::updateGaleria');
     $routes->get('imagenes_locales', 'GaleriaController::listarImagenesUploads');
     $routes->post('eliminar_imagen', 'GaleriaController::eliminarImagenLocal');
