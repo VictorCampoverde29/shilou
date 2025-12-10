@@ -63,14 +63,14 @@ function mostrarDetalles() {
                               <label for="detalle-${idx}"><strong>Detalle:</strong></label>
                               <textarea class="form-control mb-3" id="detalle-${idx}" autocomplete="off" placeholder="Detalle del Servicio">${item.detalle}</textarea>
                           </div>
-                          <button type="button" class="btn btn-primary" onclick="editarDetalle(${idx})">
-                              <i class="fas fa-save"></i> Guardar Cambios
+                          <button type="button" class="btn btn-primary btn-flat" onclick="editarDetalle(${idx})">
+                              <i class="fas fa-save"></i> GUARDAR
                           </button>
-                          <button type="button" class="btn btn-default" onclick="limpiarDetalle(${idx})">
-                              <i class="fas fa-eraser"></i> Limpiar
+                          <button type="button" class="btn btn-default btn-flat" onclick="limpiarDetalle(${idx})">
+                              <i class="fas fa-eraser"></i> LIMPIAR
                           </button>
-                          <button type="button" class="btn btn-danger float-right" onclick="eliminarDetalle(${idx})">
-                              <i class="fas fa-trash-alt"></i> Eliminar
+                          <button type="button" class="btn btn-danger btn-flat float-right" onclick="eliminarDetalle(${idx})">
+                              <i class="fas fa-trash-alt"></i> ELIMINAR
                           </button>
                         </form>
                   </div>
@@ -284,7 +284,7 @@ function editar() {
             }
         },
         error: function () {
-            Swal.fire('Error', 'Ha ocurrido un error al editar la empresa', 'error');
+            Swal.fire('Error', 'Ha ocurrido un error al editar el servicio', 'error');
         }
     });
 }

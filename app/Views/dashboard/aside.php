@@ -10,20 +10,20 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
           <a href="<?= base_url('servicios/index') ?>" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
+            <i class="fas fa-spa nav-icon"></i>
             <p>SERVICIOS</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="<?= base_url('galeria/index') ?>" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
+            <i class="fas fa-images nav-icon"></i>
             <p>GALERIA</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url() ?>" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Top Navigation</p>
+          <a href="<?= base_url('testimonios/index') ?>" class="nav-link">
+            <i class="fas fa-comments nav-icon"></i>
+            <p>TESTIMONIOS</p>
           </a>
         </li>
         <li class="nav-item">

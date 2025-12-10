@@ -40,3 +40,13 @@ $routes->group('galeria', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->post('eliminar_imagen', 'GaleriaController::eliminarImagenLocal');
 });
 
+$routes->group('testimonios', ['filter' => 'AuthFilter'], function ($routes) {
+    $routes->get('index', 'TestimoniosController::index');
+    $routes->get('obtener_areas', 'TestimoniosController::obtenerAreas');
+    $routes->get('obtener_detalles', 'ServiciosController::obtenerDetalles');
+    $routes->post('editar_detalle', 'TestimoniosController::updateTestimonio');
+    $routes->post('insertar_detalle', 'TestimoniosController::insertar');
+    $routes->post('eliminar_detalle', 'TestimoniosController::delete');
+    $routes->post('editar', 'TestimoniosController::update');
+});
+

@@ -1,5 +1,7 @@
 <?= $this->extend('Views/dashboard/template.php'); ?>
-
+<?= $this->section('title'); ?>
+Shilou | Dashboard
+<?= $this->endSection(); ?>
 <?= $this->section('styles'); ?>
 <link rel="stylesheet" href="<?= base_url('public/plugins/sweetalert2/sweetalert2.css') ?>">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">

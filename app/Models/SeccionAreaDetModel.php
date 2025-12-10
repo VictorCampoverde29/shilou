@@ -6,7 +6,7 @@ class SeccionAreaDetModel extends Model
 {
     protected $table      = 'seccion_area_detalle';
     protected $primaryKey = 'iddetalle';
-    protected $allowedFields = ['iddetalle', 'idarea', 'titulo', 'detalle', 'usuario', 'url_foto', 'estado', 'comentario', 'icono_svg'];
+    protected $allowedFields = ['iddetalle', 'idarea', 'titulo', 'detalle', 'usuario', 'url_foto', 'estado', 'comentario', 'icono_svg', 'servicio'];
 
     public function getDetallesByArea($idarea)
     {
@@ -19,5 +19,11 @@ class SeccionAreaDetModel extends Model
             return false;
         }
         return $this->where('iddetalle', $cod)->delete();
+    }
+    public function getServicios()
+    {
+        return $this->select('titulo, iddetalle')
+            ->where('idarea', 1)
+            ->findAll();
     }
 }

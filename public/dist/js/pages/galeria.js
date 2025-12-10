@@ -344,7 +344,7 @@ function registrarDetalle() {
         return;
     }
     var parametros = {
-        idarea: 2,
+        idarea: $('#txtid').val(),
         titulo: $('#txttitulo').val(),
         detalle: $('#txtdetalle').val(),
         url_foto: $('#txturl').val(),
@@ -432,7 +432,7 @@ function editar() {
             }
         },
         error: function () {
-            Swal.fire('Error', 'Ha ocurrido un error al editar la empresa', 'error');
+            Swal.fire('Error', 'Ha ocurrido un error al editar la galería', 'error');
         }
     });
 }

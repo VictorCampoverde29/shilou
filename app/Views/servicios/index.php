@@ -1,4 +1,7 @@
 <?= $this->extend('dashboard/template'); ?>
+<?= $this->section('title'); ?>
+Shilou | Servicios
+<?= $this->endSection(); ?>
 <?= $this->section('styles'); ?>
 <link rel="stylesheet" href="<?= base_url('public/plugins/sweetalert2/sweetalert2.css') ?>">
 <style>

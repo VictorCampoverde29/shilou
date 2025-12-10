@@ -1,6 +1,6 @@
 <?= $this->extend('dashboard/template'); ?>
 <?= $this->section('title'); ?>
-Shilou | Galería
+Shilou | Testimonios
 <?= $this->endSection(); ?>
 <?= $this->section('styles'); ?>
 <link rel="stylesheet" href="<?= base_url('public/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
@@ -8,21 +8,6 @@ Shilou | Galería
 <link rel="stylesheet" href="<?= base_url('public/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>">
 <link rel="stylesheet" href="<?= base_url('public/plugins/sweetalert2/sweetalert2.css') ?>">
 <style>
-  #contenedorCards .card-body img.img-fluid {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border: 2px solid #c89b5a;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    background: #fff;
-    display: block;
-  }
-  #contenedorCards .card-body img.img-fluid {
-    border: 2px solid #a7a3a3ff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  }
   .card-outline.card-oro {
     border-top: 3px solid #c89b5a !important;
   }
@@ -35,7 +20,7 @@ Shilou | Galería
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Galería</h1>
+          <h1>Testimonios</h1>
         </div>
       </div>
     </div><!-- /.container-fluid -->
@@ -87,8 +72,8 @@ Shilou | Galería
     <div class="card card-solid card-outline card-oro">
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
-          <h5 class="card-title">Catalogo</h5>
-          <button type="button" class="btn btn-default" onclick="abrirModal()">+ Nuevo Card</button>
+          <h5 class="card-title">Testimonios de los Clientes</h5>
+          <button type="button" class="btn btn-default" onclick="abrirModal()">+ Nuevo Testimonio</button>
         </div>
       </div>
       <div class="card-body">
@@ -107,7 +92,7 @@ Shilou | Galería
 </div>
 <!------------------------------------------------- MODAL NUEVO DETALLE SERVICIO -------------------------------------------------------------->
 <div class="modal fade" id="mdldetalle" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalDefaultLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header" style="background: rgba(249, 245, 240, 0.9);">
         <h4 class="modal-title" id="modalDefaultLabel">Agregar nuevo Card</h4>
@@ -119,69 +104,37 @@ Shilou | Galería
         <div class="col-sm-12">
           <input type="hidden" id="iddetalle" name="iddetalle">
           <div class="form-group">
-            <label for="fileimg">Imagen</label>
-            <div class="row justify-content-between mb-2">
-              <div class="col-sm-6">
-                <button type="button" class="btn btn-default btn-sm btn-block" id="btnimg" onclick="document.getElementById('fileimg').click();">
-                  <i class="fas fa-folder-open"></i> ARCHIVOS
-                </button>
-              </div>
-              <div class="col-sm-6">
-                <button type="button" class="btn btn-default btn-sm btn-block" id="btngaleria" onclick="abrirGaleria()">
-                  <i class="fas fa-images"></i> GALERÍA
-                </button>
+            <label for="txtcliente">Cliente</label>
+            <input type="text" class="form-control" id="txtcliente" name="txtcliente" autocomplete="off" placeholder="Nombre del Cliente">
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="txtcomentario">Testimonio</label>
+                <textarea class="form-control" id="txtcomentario" name="txtcomentario" autocomplete="off" placeholder="Testimonio del Cliente"></textarea>
               </div>
             </div>
-            <img class="img-fluid" style="width:100%;height:200px;object-fit:cover;" id="img">
-            <input type="file" class="d-none" id="fileimg" accept="image/*">
-            <input type="hidden" class="form-control mb-2" id="txturl" readonly>
-            <input type="text" class="form-control mb-2" id="txtdetalle" placeholder="Sube tu imagen..." readonly>
           </div>
-          <div class="form-group">
-            <label for="txttitulo">Título</label>
-            <input type="text" class="form-control" id="txttitulo" name="txttitulo" autocomplete="off" placeholder="Título del Card">
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
-        <button type="button" class="btn btn-primary" onclick="registrarDetalle()"><i class="fas fa-plus"></i> Agregar</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!------------------------------------------------- MODAL NUEVO DETALLE SERVICIO -------------------------------------------------------------->
-<div class="modal fade" id="mdlGaleriaLocal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalDefaultLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header" style="background: rgba(249, 245, 240, 0.9);">
-        <h4 class="modal-title" id="modalDefaultLabel">Imagenes Guardadas</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="card">
-              <div class="card-header bg-primary">
-                <h3 class="card-title">Imágenes Locales</h3>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="cmbservicio">Servicio</label>
+                <select class="form-control" id="cmbservicio" name="cmbservicio">
+                  <?php foreach ($servicios as $servicio): ?>
+                    <option value="<?= esc($servicio['titulo']); ?>">
+                      <?= esc($servicio['titulo']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
               </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped table-sm" id="tblgalerialocal" style="width:100%">
-                    <thead class="bg-dark">
-                      <tr>
-                        <th>Imagen</th>
-                        <th>Nombre</th>
-                        <th>Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- Contenido dinámico -->
-                    </tbody>
-                  </table>
-                </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="cmbestado">Estado</label>
+                <select class="form-control" id="cmbestado" name="cmbestado">
+                  <option value="INACTIVO">INACTIVO</option>
+                  <option value="ACTIVO">ACTIVO</option>
+                </select>
               </div>
             </div>
           </div>
@@ -194,7 +147,6 @@ Shilou | Galería
     </div>
   </div>
 </div>
-
 
 <?= $this->endSection(); ?>
 
@@ -209,6 +161,6 @@ Shilou | Galería
 <script src="<?= base_url('public/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') ?>"></script>
 <script src="<?= base_url('public/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= base_url('public/plugins/sweetalert2/sweetalert2.js') ?>"></script>
-<script src="<?= base_url('public/dist/js/pages/galeria.js') ?>"></script>
+<script src="<?= base_url('public/dist/js/pages/testimonios.js') ?>"></script>
 <script src="<?= base_url('public/dist/js/pages/generales.js') ?>"></script>
 <?= $this->endSection(); ?>
