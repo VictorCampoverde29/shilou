@@ -12,7 +12,7 @@ function mostrarDatos() {
             $('#txttitulos').val(response[0].titulo);
             $('#txttituloresaltado').val(response[0].titulo_resaltado);
             $('#txtdetalles').val(response[0].detalle);
-             mostrarDetalles();
+            mostrarDetalles();
         },
         error: function () {
             Swal.fire('Error', 'No se pudieron cargar los datos del servicio', 'error');
@@ -36,15 +36,14 @@ function mostrarDetalles() {
         success: function (response) {
             $('#dynamic-tabs').empty();
             $('#dynamic-tab-content').empty();
-            response.forEach(function(item, idx) {
-              let activeClass = idx === 0 ? 'active' : '';
-              // Tab
-              $('#dynamic-tabs').append(`
+            response.forEach(function (item, idx) {
+                let activeClass = idx === 0 ? 'active' : '';
+                $('#dynamic-tabs').append(`
                   <a class="nav-item nav-link ${activeClass}" id="tab-${idx}-tab" data-toggle="tab" href="#tab-${idx}" role="tab" aria-controls="tab-${idx}" aria-selected="${activeClass ? 'true' : 'false'}" data-iddetalle="${item.iddetalle}">
                       ${item.titulo}
                   </a>
               `);
-              $('#dynamic-tab-content').append(`
+                $('#dynamic-tab-content').append(`
                   <div class="tab-pane fade ${activeClass ? 'show active' : ''}" id="tab-${idx}" role="tabpanel" aria-labelledby="tab-${idx}-tab">
                       <form id="form-detalle-${idx}" data-iddetalle="${item.iddetalle}">
                           <div class="form-row mt-3">
@@ -52,9 +51,12 @@ function mostrarDetalles() {
                                   <label for="titulo-${idx}"><strong>Título:</strong></label>
                                   <input type="text" class="form-control" id="titulo-${idx}" autocomplete="off" placeholder="Título del Servicio" value="${item.titulo}">
                               </div>
-                              <div class="form-group col-md-5">
+                              <div class="form-group col-md-4">
                                   <label for="icono-${idx}"><strong>Icono:</strong></label>
-                                  <input type="text" class="form-control" id="icono-${idx}" autocomplete="off" placeholder="Icono del Servicio" value="${item.icono_svg}">
+                                  <div class="d-flex align-items-center">
+                                      <input type="text" class="form-control mr-2" id="icono-${idx}" autocomplete="off" placeholder="Cambiar Icono" value="">
+                                      <div id="icono-preview-${idx}" style="width: 32px; height: 32px; display: flex; align-items: center;"></div>
+                                  </div>
                               </div>
                           </div>
                           <div class="form-group">
@@ -73,7 +75,28 @@ function mostrarDetalles() {
                         </form>
                   </div>
               `);
-          });
+                $(`#icono-preview-${idx}`).html(item.icono_svg);
+                $(`#icono-${idx}`).data('original-svg', item.icono_svg);
+                $(`#icono-${idx}`).on('input', function () {
+                    const val = $(this).val();
+                    if (val.trim() === '') {
+                        $(`#icono-preview-${idx}`).html($(this).data('original-svg'));
+                    } else {
+                        try {
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = val.trim();
+                            const svg = tempDiv.querySelector('svg');
+                            if (svg) {
+                                $(`#icono-preview-${idx}`).html(val);
+                            } else {
+                                throw new Error();
+                            }
+                        } catch {
+                            $(`#icono-preview-${idx}`).html('<span style="color:red;white-space:nowrap;">Icono SVG inválido</span>');
+                        }
+                    }
+                });
+            });
         },
         error: function () {
             Swal.fire('Error', 'No se pudieron cargar los detalles', 'error');
@@ -148,19 +171,19 @@ function editarDetalle(idx) {
     const iddetalle = $(`#form-detalle-${idx}`).data('iddetalle');
     const titulo = $(`#titulo-${idx}`).val();
     const detalle = $(`#detalle-${idx}`).val();
-    const icono_svg = $(`#icono-${idx}`).val();
+    const icono_svg = $(`#icono-preview-${idx}`).html();
 
-     if ($(`#titulo-${idx}`).val() === '') {
+    if (titulo === '') {
         Swal.fire('Agregar Servicio', 'El título es obligatorio', 'error');
         $(`#titulo-${idx}`).focus();
         return;
     }
-    if ($(`#detalle-${idx}`).val() === '') {
+    if (detalle === '') {
         Swal.fire('Agregar Servicio', 'El detalle es obligatorio', 'error');
         $(`#detalle-${idx}`).focus();
         return;
     }
-    if ($(`#icono-${idx}`).val() === '') {
+    if (!icono_svg || icono_svg.trim() === '') {
         Swal.fire('Agregar Servicio', 'El icono es obligatorio', 'error');
         $(`#icono-${idx}`).focus();
         return;
@@ -191,7 +214,7 @@ function editarDetalle(idx) {
                     text: response.message,
                 }).then(function () {
                     mostrarDetalles();
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $(`#tab-${idx}-tab`).tab('show');
                     }, 500);
                 });

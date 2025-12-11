@@ -22,4 +22,34 @@ class SeccionAreasModel extends Model
         }
         return $query->first() !== null;
     }
+    public function getHead()
+    {
+        return $this->select('idarea, idseccion, titulo, titulo_resaltado, detalle, telefono, direccion')
+            ->where('idseccion', 5) // HEAD
+            ->first();
+    }
+    public function getServicios()
+    {
+        return $this->select('idarea, idseccion, titulo, titulo_resaltado, detalle')
+            ->where('idseccion', 1) // SERVICIOS
+            ->first();
+    }
+    public function getGaleria()
+    {
+        return $this->select('idarea, idseccion, titulo, titulo_resaltado, detalle')
+            ->where('idseccion', 2) // GALERIA
+            ->first();
+    }
+    public function getTestimonios()
+    {
+        return $this->select('idarea, idseccion, titulo, titulo_resaltado, detalle')
+            ->where('idseccion', 3) // TESTIMONIOS
+            ->first();
+    }
+    public function getContacto()
+    {
+        return $this->select('idarea, idseccion, titulo, detalle, telefono, direccion')
+            ->where('idseccion', 4) // CONTACTO
+            ->first();
+    }
 }

@@ -58,7 +58,7 @@ function renderizarCards(datos) {
                         <input type="hidden" id="iddetalle${item.iddetalle}" name="iddetalle${item.iddetalle}" value="${item.iddetalle}">
                         <div class="form-group">
                             <label for="fileimg${item.iddetalle}">Imagen</label>
-                            <img src="${imgSrc}" alt="${item.detalle}" class="img-fluid" style="width:100%;height:200px;object-fit:cover;" data-original="${imgSrc}" id="img${item.iddetalle}">
+                            <img src="${imgSrc}" alt="${item.detalle}" class="img-fluid object-contain" style="width:96%;height:238px;object-fit:contain;" data-original="${imgSrc}" id="img${item.iddetalle}">
                             <input type="file" class="d-none" id="fileimg${item.iddetalle}" accept="image/*">
                             <div class="col-sm-12">
                                 <div class="row justify-content-between mb-2">
@@ -336,6 +336,13 @@ function registrarDetalle() {
     if ($('#txtdetalle').val() === '') {
         Swal.fire('Agregar Galería', 'El nombre de la imagen es obligatoria', 'warning');
         $('#txtdetalle').focus();
+        return;
+    }
+    const extensionesValidas = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'];
+    const nombre = $('#txtdetalle').val();
+    const extension = nombre.split('.').pop().toLowerCase();
+    if (!extensionesValidas.includes(extension)) {
+        Swal.fire('Extensión no permitida', 'Solo se permiten imágenes: ' + extensionesValidas.join(', '), 'warning');
         return;
     }
     if ($('#txttitulo').val() === '') {

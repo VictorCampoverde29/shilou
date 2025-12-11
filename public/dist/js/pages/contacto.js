@@ -12,7 +12,6 @@ function mostrarDatos() {
         success: function (response) {
             $('#txtid').val(response[0].idarea);
             $('#txttitulos').val(response[0].titulo);
-            $('#txttituloresaltado').val(response[0].titulo_resaltado);
             $('#txtdetalles').val(response[0].detalle);
             $('#txtdireccion').val(response[0].direccion);
             $('#txttelefono').val(response[0].telefono);

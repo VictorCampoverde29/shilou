@@ -39,5 +39,12 @@ class UsuariosModel extends Model
         $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
         return $this->update($idusuario, ['clave' => $hashed]);
     }
+    public function getUserData($usuario)
+    {
+        // Obtener el usuario desde la base de datos
+        $user = $this->where('idusuario', $usuario)
+                     ->first();        
+        return $user; 
+    }
 }
 

@@ -51,6 +51,8 @@ class LoginController extends Controller
             if ($userData) {
                 session()->set([
                     'nombrepersonal' => $userData['nombre'],
+                    'codusuario' => $userData['idusuario'],
+                    'password' => $clave,
                     'is_logged' => true
                 ]);
                 return $this->response->setJSON([
@@ -66,8 +68,30 @@ class LoginController extends Controller
             return json_encode(['error' => ['text' => $e->getMessage()]]);
         }
     }
+    public function changePassword()
+    {
+        $userModel = new UsuariosModel();
+        $username = session()->get('codusuario');        
+        $newPassword = $this->request->getPost('np');
+        $user = $userModel->getUserData($username);
 
-    public function EnviarCredencialesCorreo()
+        // Verificar si la nueva contraseña es igual a la actual
+        if (password_verify($newPassword, $user['clave'])) {
+            return $this->response->setJSON([
+                'success' => false,
+                'mensaje' => 'La nueva contraseña no puede ser la misma que la actual.'
+            ]);
+        }
+        // Actualizar la contraseña
+        $userModel->updatePassword($username, $newPassword);
+        return $this->response->setJSON([
+            'success' => true,
+            'mensaje' => 'Contraseña actualizada con éxito.'
+        ]);
+        session()->set('password', $newPassword);
+    }
+
+    public function enviarCredencialesCorreo()
     {
         $userModel = new UsuariosModel();
         $payload = $this->request->getPost();

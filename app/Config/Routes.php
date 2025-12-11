@@ -10,7 +10,13 @@ $routes->group('login', function ($routes) {
     $routes->post('login', 'LoginController::LogueoIngreso');
     $routes->get('logout', 'LoginController::salir');
     $routes->get('unauthorized', 'LoginController::unauthorized');
-    $routes->post('enviar_credenciales_correo', 'LoginController::EnviarCredencialesCorreo');
+    $routes->post('enviar_credenciales_correo', 'LoginController::enviarCredencialesCorreo');
+});
+
+$routes->get('web', 'HeadController::web');
+
+$routes->group('acceso', ['filter' => 'CambioFilter'], function ($routes) {
+    $routes->post('clave', 'LoginController::changePassword');
 });
 
 $routes->group('', ['filter' => 'AuthFilter'], function ($routes) {

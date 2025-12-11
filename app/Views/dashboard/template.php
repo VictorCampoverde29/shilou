@@ -103,7 +103,7 @@
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i> CANCELAR</button>
-          <button type="button" class="btn btn-primary" onclick="registrarDetalle()"><i class="fas fa-key"></i> CAMBIAR CLAVE</button>
+          <button type="button" class="btn btn-primary" onclick="guardarCambio()"><i class="fas fa-key"></i> CAMBIAR CLAVE</button>
         </div>
       </div>
     </div>

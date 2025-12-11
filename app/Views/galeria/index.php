@@ -9,20 +9,41 @@ Shilou | Galería
 <link rel="stylesheet" href="<?= base_url('public/plugins/sweetalert2/sweetalert2.css') ?>">
 <style>
   #contenedorCards .card-body img.img-fluid {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+    width: 220px;
+    height: 250px;
+    /* Ajusta aquí la altura */
+    background: #fff;
     border: 2px solid #c89b5a;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  #contenedorCards .card-body img.img-fluid {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: none;
+  }
+
+  #mdldetalle .form-group .img-cuadrada {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    border: 2px solid #c89b5a;
+    border-radius: 8px;
     background: #fff;
     display: block;
-  }
-  #contenedorCards .card-body img.img-fluid {
-    border: 2px solid #a7a3a3ff;
-    border-radius: 8px;
+    margin: 0 auto 10px auto;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
+
   .card-outline.card-oro {
     border-top: 3px solid #c89b5a !important;
   }
@@ -105,7 +126,7 @@ Shilou | Galería
   </section>
   <!-- /.content -->
 </div>
-<!------------------------------------------------- MODAL NUEVO DETALLE SERVICIO -------------------------------------------------------------->
+<!------------------------------------------------- MODAL NUEVO DETALLE GALERIA -------------------------------------------------------------->
 <div class="modal fade" id="mdldetalle" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalDefaultLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -120,7 +141,12 @@ Shilou | Galería
           <input type="hidden" id="iddetalle" name="iddetalle">
           <div class="form-group">
             <label for="fileimg">Imagen</label>
-            <div class="row justify-content-between mb-2">
+            <br>
+            <span class="badge badge-warning d-block mb-2" style="font-size: 0.85em; font-weight: normal; white-space: normal;">
+              <i class="fas fa-exclamation-triangle"></i>
+              Recomendación: Dimensiones 400x400px (cuadrada), relación 1:1. (Para evitar bordes blancos o recortes indeseados)
+            </span>
+            <div class="row justify-content-between mb-2 mt-2">
               <div class="col-sm-6">
                 <button type="button" class="btn btn-default btn-sm btn-block" id="btnimg" onclick="document.getElementById('fileimg').click();">
                   <i class="fas fa-folder-open"></i> ARCHIVOS
@@ -132,7 +158,7 @@ Shilou | Galería
                 </button>
               </div>
             </div>
-            <img class="img-fluid" style="width:100%;height:200px;object-fit:cover;" id="img">
+            <img class="img-cuadrada" id="img">
             <input type="file" class="d-none" id="fileimg" accept="image/*">
             <input type="hidden" class="form-control mb-2" id="txturl" readonly>
             <input type="text" class="form-control mb-2" id="txtdetalle" placeholder="Sube tu imagen..." readonly>

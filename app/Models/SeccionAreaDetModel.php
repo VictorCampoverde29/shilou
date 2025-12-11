@@ -26,4 +26,29 @@ class SeccionAreaDetModel extends Model
             ->where('idarea', 1)
             ->findAll();
     }
+    public function getDetalleHead()
+    {
+        return $this->select('iddetalle, idarea, titulo, detalle, icono_svg')
+            ->where('idarea', 5) // HEAD
+            ->first();
+    }
+    public function getDetalleServicios()
+    {
+        return $this->select('iddetalle, idarea, titulo, detalle, icono_svg')
+            ->where('idarea', 1) // SERVICIOS
+            ->findAll();
+    }
+    public function getDetalleGaleria()
+    {
+        return $this->select('iddetalle, idarea, titulo, detalle, url_foto')
+            ->where('idarea', 2) // GALERIA
+            ->findAll();
+    }
+    public function getDetalleTestimonios()
+    {
+        return $this->select('iddetalle, idarea, usuario, servicio, comentario')
+            ->where('estado', 'ACTIVO')
+            ->where('idarea', 3) // TESTIMONIOS
+            ->findAll();
+    }
 }

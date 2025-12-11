@@ -51,22 +51,22 @@ function limpiar() {
 
 function editar() {
     if ($('#txttitulos').val() === '') {
-        Swal.fire('Guardar Contacto', 'El título es obligatorio', 'warning');
+        Swal.fire('Guardar Head', 'El título es obligatorio', 'warning');
         $('#txttitulos').focus();
         return;
     }
     if ($('#txtdetalles').val() === '') {
-        Swal.fire('Guardar Contacto', 'El detalle es obligatorio', 'warning');
+        Swal.fire('Guardar Head', 'El detalle es obligatorio', 'warning');
         $('#txtdetalles').focus();
         return;
     }
     if ($('#txttelefono').val() === '') {
-        Swal.fire('Guardar Contacto', 'El teléfono es obligatorio', 'warning');
+        Swal.fire('Guardar Head', 'El teléfono es obligatorio', 'warning');
         $('#txttelefono').focus();
         return;
     }
     if ($('#txtdireccion').val() === '') {
-        Swal.fire('Guardar Contacto', 'La dirección es obligatoria', 'warning');
+        Swal.fire('Guardar Head', 'La dirección es obligatoria', 'warning');
         $('#txtdireccion').focus();
         return;
     }
@@ -86,14 +86,14 @@ function editar() {
             if (response.error) {
                 Swal.fire({
                     icon: "error",
-                    title: 'Guardar Contacto',
+                    title: 'Guardar Head',
                     text: response.error
                 });
             }
             else {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Guardar Contacto',
+                    title: 'Guardar Head',
                     text: response.message,
                 }).then(function () {
                     mostrarDatos();
@@ -101,7 +101,7 @@ function editar() {
             }
         },
         error: function () {
-            Swal.fire('Error', 'Ha ocurrido un error al editar el contacto', 'error');
+            Swal.fire('Error', 'Ha ocurrido un error al editar el head', 'error');
         }
     });
 }
