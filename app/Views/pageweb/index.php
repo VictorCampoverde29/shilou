@@ -29,7 +29,7 @@
         <a href="#contacto">Contacto</a>
       </nav>
 
-      <a href="tel:+51902597938" class="btn btn-primary btn-small">
+      <a href="#contacto" class="btn btn-primary btn-small">
         Reservar Cita
       </a>
     </div>
@@ -53,7 +53,7 @@
         </p>
 
         <div class="hero-actions">
-          <a href="tel:+51902597938" class="btn btn-primary">
+          <a href="#contacto" class="btn btn-primary">
             Agenda tu Cita
           </a>
           <a href="#servicios" class="btn btn-outline">
@@ -193,22 +193,23 @@
         </ul>
       </div>
 
-      <form class="contact-form">
+      <form class="contact-form" id="contactForm">
         <div class="form-group">
-          <label for="nombre">Nombre completo</label>
-          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" />
+          <label for="txttunombre">Nombre completo</label>
+          <input type="text" id="txttunombre" name="txttunombre" placeholder="Tu nombre" />
         </div>
         <div class="form-group">
-          <label for="telefono">Teléfono</label>
-          <input type="tel" id="telefono" name="telefono" placeholder="+51 ..." />
+          <label for="txttutelefono">Teléfono</label>
+          <input type="tel" id="txttutelefono" name="txttutelefono" placeholder="+51 ..." />
         </div>
         <div class="form-group">
-          <label for="mensaje">Mensaje</label>
-          <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos qué tratamiento te interesa"></textarea>
+          <label for="txttumensaje">Mensaje</label>
+          <textarea id="txttumensaje" name="txttumensaje" rows="4" placeholder="Cuéntanos qué tratamiento te interesa"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary btn-full">
-          Enviar consulta
-        </button>
+          <button type="button" class="btn btn-primary btn-full" onclick="enviarConsulta()">
+            Enviar consulta
+          </button>
+          <input type="hidden" id="recaptcha_token" name="recaptcha_token" />
       </form>
     </div>
   </section>
@@ -226,10 +227,31 @@
     </div>
   </footer>
 
+  <?php
+    $telefonoWsp = preg_replace('/\D/', '', $contacto['telefono']);
+    if (strpos($telefonoWsp, '51') !== 0) {
+      $telefonoWsp = '51' . $telefonoWsp;
+    }
+  ?>
+  <a href="https://wa.me/<?= $telefonoWsp ?>" target="_blank" id="wsp-float" aria-label="WhatsApp" rel="noopener">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="52" height="52" style="display:block;">
+  </a>
+
+<script>
+  var baseURL = '<?= base_url(); ?>';
+</script>
+
 <script>
   window.serviciosData = <?= json_encode($serviciosdetalles) ?>;
 </script>
-<script src="<?= base_url('public/dist/js/pages/shilou.js') ?>"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=<?= esc(env('RECAPTCHA_SITE_KEY')) ?>"></script>
+<script>
+  const RECAPTCHA_SITE_KEY = '<?= esc(env('RECAPTCHA_SITE_KEY')) ?>';
+</script>
+<script src="<?= base_url('public/dist/js/pages/shilou.js?v=' . env('VERSION')) ?>"></script>
 
 </body>
 </html>
+

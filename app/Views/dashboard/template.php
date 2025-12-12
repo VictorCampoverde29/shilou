@@ -114,7 +114,7 @@
   <script src="<?= base_url('public/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
   <script src="<?= base_url('public/dist/js/adminlte.js?v=3.2.0') ?>"></script>
   <script src="<?= base_url('public/plugins/sweetalert2/sweetalert2.all.min.js') ?>"></script>
-  <script src="<?= base_url('public/dist/js/pages/generales.js') ?>"></script>
+  <script src="<?= base_url('public/dist/js/pages/generales.js?v=' . env('VERSION')) ?>"></script>
 
   <script>
     var baseURL = '<?= base_url(); ?>';

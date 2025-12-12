@@ -14,6 +14,7 @@ $routes->group('login', function ($routes) {
 });
 
 $routes->get('/', 'PageController::index');
+$routes->post('enviar_correo', 'ContactoController::enviarCorreo');
 
 $routes->group('acceso', ['filter' => 'CambioFilter'], function ($routes) {
     $routes->post('clave', 'LoginController::changePassword');

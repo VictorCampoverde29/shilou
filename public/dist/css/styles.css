@@ -1,3 +1,30 @@
+/* ÍCONO FLOTANTE WHATSAPP */
+#wsp-float {
+  position: fixed;
+  right: 24px;
+  bottom: 28px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  box-shadow: 0 6px 24px rgba(32, 50, 70, 0.18), 0 1.5px 4px rgba(32, 50, 70, 0.12);
+  background: #25D366;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+#wsp-float:hover {
+  box-shadow: 0 10px 32px rgba(32, 50, 70, 0.22), 0 2px 8px rgba(32, 50, 70, 0.16);
+  transform: translateY(-2px) scale(1.06);
+}
+#wsp-float img {
+  display: block;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+}
 :root {
   --bg: #f9f5f0;
   --bg-alt: #ffffff;
