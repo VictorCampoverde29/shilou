@@ -13,15 +13,15 @@ $routes->group('login', function ($routes) {
     $routes->post('enviar_credenciales_correo', 'LoginController::enviarCredencialesCorreo');
 });
 
-$routes->get('web', 'HeadController::web');
+$routes->get('/', 'PageController::index');
 
 $routes->group('acceso', ['filter' => 'CambioFilter'], function ($routes) {
     $routes->post('clave', 'LoginController::changePassword');
 });
 
-$routes->group('', ['filter' => 'AuthFilter'], function ($routes) {
+$routes->group('dashboard', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('/', 'Home::index');
-    $routes->get('dashboard', 'Home::index');
+    $routes->get('index', 'Home::index');
 });
 
 $routes->group('servicios', ['filter' => 'AuthFilter'], function ($routes) {

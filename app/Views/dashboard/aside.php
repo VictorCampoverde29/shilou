@@ -1,6 +1,6 @@
 <aside class="main-sidebar" style="background: rgba(249, 245, 240, 0.9);" elevation-2>
   <!-- Brand Logo -->
-  <a href="<?= base_url('web') ?>" class="brand-link d-flex flex-column align-items-center" style="padding-top: 18px; padding-bottom: 18px;">
+  <a href="<?= base_url('') ?>" class="brand-link d-flex flex-column align-items-center" style="padding-top: 18px; padding-bottom: 18px;">
     <span class="brand-text font-weight-bold" style="font-size: 1.6rem; letter-spacing: 0.08em; margin-top: 6px; margin-bottom: 6px; text-align: center; color: #c89b5a; transition: color 0.2s;">SHILOU</span>
   </a>
   <!-- Sidebar -->

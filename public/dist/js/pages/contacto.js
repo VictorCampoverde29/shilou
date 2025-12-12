@@ -30,22 +30,22 @@ function limpiar() {
 }
 
 function editar() {
-    if ($('#txttitulos').val() === '') {
+    if ($('#txttitulos').val().trim() === '') {
         Swal.fire('Guardar Contacto', 'El título es obligatorio', 'warning');
         $('#txttitulos').focus();
         return;
     }
-    if ($('#txtdetalles').val() === '') {
+    if ($('#txtdetalles').val().trim() === '') {
         Swal.fire('Guardar Contacto', 'El detalle es obligatorio', 'warning');
         $('#txtdetalles').focus();
         return;
     }
-    if ($('#txttelefono').val() === '') {
+    if ($('#txttelefono').val().trim() === '') {
         Swal.fire('Guardar Contacto', 'El teléfono es obligatorio', 'warning');
         $('#txttelefono').focus();
         return;
     }
-    if ($('#txtdireccion').val() === '') {
+    if ($('#txtdireccion').val().trim() === '') {
         Swal.fire('Guardar Contacto', 'La dirección es obligatoria', 'warning');
         $('#txtdireccion').focus();
         return;

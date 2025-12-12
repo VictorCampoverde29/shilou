@@ -32,16 +32,22 @@ Shilou | Head
       <div class="card-body">
         <div class="row">
           <input type="hidden" class="form-control" id="txtid">
-          <div class="col-12 col-sm-6">
+          <div class="col-12 col-sm-4">
             <div class="form-group">
               <label for="txttitulos"> Título:</label>
               <input type="text" class="form-control" autocomplete="off" placeholder="Título de la Galería" id="txttitulos">
             </div>
           </div>
-          <div class="col-12 col-sm-6">
+          <div class="col-12 col-sm-4">
             <div class="form-group">
               <label for="txttituloresaltado"> Título Resaltado:</label>
               <input type="text" class="form-control" id="txttituloresaltado" autocomplete="off" placeholder="Título Resaltado">
+            </div>
+          </div>
+          <div class="col-12 col-sm-4">
+            <div class="form-group">
+              <label for="txttitulo2"> Título Extra:</label>
+              <input type="text" class="form-control" id="txttitulo2" autocomplete="off" placeholder="Título Extra">
             </div>
           </div>
         </div>

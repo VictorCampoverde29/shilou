@@ -11,7 +11,14 @@ function mostrarDatos() {
         url: url,
         success: function (response) {
             $('#txtid').val(response[0].idarea);
-            $('#txttitulos').val(response[0].titulo);
+            if (response[0].titulo && response[0].titulo.includes('|')) {
+                var partes = response[0].titulo.split('|');
+                $('#txttitulos').val(partes[0].trim());
+                $('#txttitulo2').val(partes[1].trim());
+            } else {
+                $('#txttitulos').val(response[0].titulo);
+                $('#txttitulo2').val('');
+            }
             $('#txttituloresaltado').val(response[0].titulo_resaltado);
             $('#txtdetalles').val(response[0].detalle);
             $('#txtdireccion').val(response[0].direccion);
@@ -50,29 +57,35 @@ function limpiar() {
 }
 
 function editar() {
-    if ($('#txttitulos').val() === '') {
+    if ($('#txttitulos').val().trim() === '') {
         Swal.fire('Guardar Head', 'El título es obligatorio', 'warning');
         $('#txttitulos').focus();
         return;
     }
-    if ($('#txtdetalles').val() === '') {
+    if ($('#txtdetalles').val().trim() === '') {
         Swal.fire('Guardar Head', 'El detalle es obligatorio', 'warning');
         $('#txtdetalles').focus();
         return;
     }
-    if ($('#txttelefono').val() === '') {
+    if ($('#txttelefono').val().trim() === '') {
         Swal.fire('Guardar Head', 'El teléfono es obligatorio', 'warning');
         $('#txttelefono').focus();
         return;
     }
-    if ($('#txtdireccion').val() === '') {
+    if ($('#txtdireccion').val().trim() === '') {
         Swal.fire('Guardar Head', 'La dirección es obligatoria', 'warning');
         $('#txtdireccion').focus();
         return;
     }
+    var titulo1 = $('#txttitulos').val();
+    var titulo2 = $('#txttitulo2').val();
+    var tituloFinal = titulo1;
+    if (titulo2) {
+        tituloFinal += ' | ' + titulo2;
+    }
     var parametros = {
         cod: $('#txtid').val(),
-        titulo: $('#txttitulos').val(),
+        titulo: tituloFinal,
         titulo_resaltado: $('#txttituloresaltado').val(),
         detalle: $('#txtdetalles').val(),
         direccion: $('#txtdireccion').val(),
@@ -107,6 +120,16 @@ function editar() {
 }
 
 function editarDetalle() {
+    if ($('#txttitulosdet').val().trim() === '') {
+        Swal.fire('Actualizar Detalle', 'El título es obligatorio', 'warning');
+        $('#txttitulosdet').focus();
+        return;
+    }
+    if ($('#txtdetallesdet').val().trim() === '') {
+        Swal.fire('Actualizar Detalle', 'El detalle es obligatorio', 'warning');
+        $('#txtdetallesdet').focus();
+        return;
+    }
     var parametros = {
         iddetalle: $('#txtidd').val(),
         titulo: $('#txttitulosdet').val(),

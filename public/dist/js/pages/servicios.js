@@ -115,17 +115,17 @@ function abrirModal() {
 }
 
 function registrarDetalle() {
-    if ($('#txttitulosdet').val() === '') {
+    if ($('#txttitulosdet').val().trim() === '') {
         Swal.fire('Agregar Servicio', 'El título es obligatorio', 'error');
         $('#txttitulosdet').focus();
         return;
     }
-    if ($('#txtdetallesdet').val() === '') {
+    if ($('#txtdetallesdet').val().trim() === '') {
         Swal.fire('Agregar Servicio', 'El detalle es obligatorio', 'error');
         $('#txtdetallesdet').focus();
         return;
     }
-    if ($('#txticonosvg').val() === '') {
+    if ($('#txticonosvg').val().trim() === '') {
         Swal.fire('Agregar Servicio', 'El icono es obligatorio', 'error');
         $('#txticonosvg').focus();
         return;
@@ -173,12 +173,12 @@ function editarDetalle(idx) {
     const detalle = $(`#detalle-${idx}`).val();
     const icono_svg = $(`#icono-preview-${idx}`).html();
 
-    if (titulo === '') {
+    if (titulo || titulo.trim() === '') {
         Swal.fire('Agregar Servicio', 'El título es obligatorio', 'error');
         $(`#titulo-${idx}`).focus();
         return;
     }
-    if (detalle === '') {
+    if (detalle || detalle.trim() === '') {
         Swal.fire('Agregar Servicio', 'El detalle es obligatorio', 'error');
         $(`#detalle-${idx}`).focus();
         return;
@@ -261,17 +261,17 @@ function eliminarDetalle(idx) {
 }
 
 function editar() {
-    if ($('#txttitulos').val() === '') {
+    if ($('#txttitulos').val().trim() === '') {
         Swal.fire('Guardar Servicio', 'El título es obligatorio', 'error');
         $('#txttitulos').focus();
         return;
     }
-    if ($('#txttituloresaltado').val() === '') {
+    if ($('#txttituloresaltado').val().trim() === '') {
         Swal.fire('Guardar Servicio', 'El título subrayado es obligatorio', 'error');
         $('#txttituloresaltado').focus();
         return;
     }
-    if ($('#txtdetalles').val() === '') {
+    if ($('#txtdetalles').val().trim() === '') {
         Swal.fire('Guardar Servicio', 'El detalle es obligatorio', 'error');
         $('#txtdetalles').focus();
         return;

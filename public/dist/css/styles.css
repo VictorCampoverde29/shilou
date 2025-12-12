@@ -283,6 +283,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.4rem;
+  visibility: hidden;
 }
 
 .card {
@@ -554,13 +555,27 @@ body {
 }
 
 .services-carousel-row {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   gap: 1.2rem;
   margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+}
+
+.services-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+.services-arrow#servicesPrev {
+  left: -60px;
+}
+.services-arrow#servicesNext {
+  right: -60px;
 }
 
 /* RESPONSIVE */
@@ -608,13 +623,25 @@ body {
   }
 
   .testimonial {
-    min-height: 120px;      /* Ajusta según tu preferencia */
+    min-height: 120px;
     padding: 1rem 1rem;
     max-width: 100%;
     display: flex;
     flex: 0 0 100%;
     flex-direction: column;
     justify-content: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .services-arrow {
+    position: static !important;
+    transform: none !important;
+    margin: 0 0.1rem;
+    display: inline-flex;
+  }
+  .services-carousel-row {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 

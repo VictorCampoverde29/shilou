@@ -256,11 +256,11 @@ function editarDatos(iddetalle) {
         Swal.fire('Imagen requerida', 'Debe seleccionar o cargar una imagen.', 'warning');
         return;
     }
-    if (!nombre) {
+    if (!nombre || nombre.trim() === '') {
         Swal.fire('Nombre requerido', 'Debe seleccionar o cargar una imagen válida.', 'warning');
         return;
     }
-    if (!titulo) {
+    if (!titulo || titulo.trim() === '') {
         Swal.fire('Título requerido', 'El título es obligatorio.', 'warning');
         return;
     }
@@ -333,7 +333,7 @@ function registrarDetalle() {
         $('#txturl').focus();
         return;
     }
-    if ($('#txtdetalle').val() === '') {
+    if ($('#txtdetalle').val().trim() === '') {
         Swal.fire('Agregar Galería', 'El nombre de la imagen es obligatoria', 'warning');
         $('#txtdetalle').focus();
         return;
@@ -395,17 +395,17 @@ function limpiarModal() {
 }
 
 function editar() {
-    if ($('#txttitulos').val() === '') {
+    if ($('#txttitulos').val().trim() === '') {
         Swal.fire('Guardar Galería', 'El título es obligatorio', 'warning');
         $('#txttitulos').focus();
         return;
     }
-    if ($('#txttituloresaltado').val() === '') {
+    if ($('#txttituloresaltado').val().trim() === '') {
         Swal.fire('Guardar Galería', 'El título subrayado es obligatorio', 'warning');
         $('#txttituloresaltado').focus();
         return;
     }
-    if ($('#txtdetalles').val() === '') {
+    if ($('#txtdetalles').val().trim() === '') {
         Swal.fire('Guardar Galería', 'El detalle es obligatorio', 'warning');
         $('#txtdetalles').focus();
         return;

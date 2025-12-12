@@ -39,9 +39,14 @@
   <section id="inicio" class="hero">
     <div class="container hero-grid">
       <div class="hero-text">
+        <?php
+          $partesTitulo = explode('|', $head['titulo']);
+          $tituloPrincipal = isset($partesTitulo[0]) ? trim($partesTitulo[0]) : '';
+          $tituloSecundario = isset($partesTitulo[1]) ? trim($partesTitulo[1]) : '';
+        ?>
         <h1>
-          <?= esc($head['titulo']) ?> <span class="text-gold italic"><?= esc($head['titulo_resaltado']) ?></span><br>
-          Natural
+          <?= esc($tituloPrincipal) ?> <span class="text-gold italic"><?= esc($head['titulo_resaltado']) ?></span><br>
+          <?= esc($tituloSecundario) ?>
         </h1>
         <p class="hero-subtitle">
           <?= esc($head['detalle']) ?>
@@ -221,165 +226,10 @@
     </div>
   </footer>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const galleryGrid = document.getElementById('galleryGrid');
-      const galleryItems = Array.from(galleryGrid.querySelectorAll('.gallery-item'));
-      let start = 0;
-      let autoInterval;
-
-      function getVisibleCount() {
-        return window.innerWidth <= 960 ? 1 : 4;
-      }
-
-      function getAutoTime() {
-        return window.innerWidth <= 960 ? 3000 : 1800;
-      }
-
-      function updateCarousel() {
-        const visible = getVisibleCount();
-        const itemWidth = galleryItems[0].offsetWidth;
-        const gap = 0.7 * 16; // 0.7rem en px
-        galleryGrid.style.transform = `translateX(-${start * (itemWidth + gap)}px)`;
-      }
-
-      function nextSlide() {
-        const visible = getVisibleCount();
-        if (start + visible < galleryItems.length) {
-          start++;
-        } else {
-          start = 0;
-        }
-        updateCarousel();
-      }
-
-      function startAuto() {
-        clearInterval(autoInterval);
-        autoInterval = setInterval(nextSlide, getAutoTime());
-      }
-
-      function resetAuto() {
-        clearInterval(autoInterval);
-        startAuto();
-      }
-
-      window.addEventListener('resize', function() {
-        const visible = getVisibleCount();
-        if (start > galleryItems.length - visible) {
-          start = Math.max(0, galleryItems.length - visible);
-        }
-        updateCarousel();
-        resetAuto();
-      });
-
-      updateCarousel();
-      startAuto();
-
-      galleryItems.forEach(item => {
-        item.addEventListener('click', function() {
-          clearInterval(autoInterval);
-          setTimeout(startAuto, 3000);
-        });
-      });
-    });
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const testimonialsGrid = document.getElementById('testimonialsGrid');
-      const testimonialItems = Array.from(testimonialsGrid.querySelectorAll('.testimonial'));
-      const tVisible = 2;
-      let tStart = 0;
-      let tAutoInterval;
-
-      function updateTestimonialsCarousel() {
-        const itemWidth = testimonialItems[0].offsetWidth;
-        const gap = 1.4 * 16; // 1.4rem en px
-        testimonialsGrid.style.transform = `translateX(-${tStart * (itemWidth + gap)}px)`;
-      }
-
-      function nextTestimonial() {
-        if (tStart + tVisible < testimonialItems.length) {
-          tStart++;
-        } else {
-          tStart = 0;
-        }
-        updateTestimonialsCarousel();
-      }
-
-      function startTestimonialsAuto() {
-        tAutoInterval = setInterval(nextTestimonial, 4000); // 4 segundos
-      }
-
-      window.addEventListener('resize', updateTestimonialsCarousel);
-
-      updateTestimonialsCarousel();
-      startTestimonialsAuto();
-
-      testimonialItems.forEach(item => {
-        item.addEventListener('click', function() {
-          clearInterval(tAutoInterval);
-          setTimeout(startTestimonialsAuto, 4000);
-        });
-      });
-    });
-  </script>
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const serviciosData = <?= json_encode($serviciosdetalles) ?>;
-    const servicesGrid = document.getElementById('servicesGrid');
-    const sPrevBtn = document.getElementById('servicesPrev');
-    const sNextBtn = document.getElementById('servicesNext');
-    let sPage = 0;
-
-    function getVisibleCount() {
-      return window.innerWidth <= 960 ? 1 : 6;
-    }
-
-    function renderServices() {
-      const sVisible = getVisibleCount();
-      servicesGrid.innerHTML = '';
-      const start = sPage * sVisible;
-      const end = start + sVisible;
-      const pageItems = serviciosData.slice(start, end);
-      pageItems.forEach(servicio => {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-          <h3>
-            ${servicio.icono_svg ? `<span class="card-icon" style="vertical-align:middle; margin-right:6px;">${servicio.icono_svg}</span>` : ''}
-            ${servicio.titulo}
-          </h3>
-          <p>${servicio.detalle}</p>
-        `;
-        servicesGrid.appendChild(card);
-      });
-      sPrevBtn.disabled = sPage === 0;
-      sNextBtn.disabled = end >= serviciosData.length;
-    }
-
-    sPrevBtn.addEventListener('click', function() {
-      if (sPage > 0) {
-        sPage--;
-        renderServices();
-      }
-    });
-
-    sNextBtn.addEventListener('click', function() {
-      const sVisible = getVisibleCount();
-      if ((sPage + 1) * sVisible < serviciosData.length) {
-        sPage++;
-        renderServices();
-      }
-    });
-
-    window.addEventListener('resize', function() {
-      sPage = 0; // Opcional: vuelve a la primera página al cambiar de tamaño
-      renderServices();
-    });
-
-    renderServices();
-  });
+<script>
+  window.serviciosData = <?= json_encode($serviciosdetalles) ?>;
 </script>
-</body>
+<script src="<?= base_url('public/dist/js/pages/shilou.js') ?>"></script>
 
+</body>
 </html>

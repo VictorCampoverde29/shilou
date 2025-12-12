@@ -139,11 +139,11 @@ function editarDatos(iddetalle) {
     const estado = $(`#cmbestado${iddetalle}`).val();
     const testimonio = $(`#txttestimonio${iddetalle}`).val();
 
-    if (!usuario) {
+    if (!usuario || usuario.trim() === '') {
         Swal.fire('Usuario requerido', 'El nombre de usuario es obligatorio.', 'warning');
         return;
     }
-    if (!testimonio) {
+    if (!testimonio || testimonio.trim() === '') {
         Swal.fire('Testimonio requerido', 'El testimonio es obligatorio.', 'warning');
         return;
     }
@@ -171,12 +171,12 @@ function editarDatos(iddetalle) {
 }
 
 function registrarDetalle() {
-    if ($('#txtcliente').val() === '') {
+    if ($('#txtcliente').val().trim() === '') {
         Swal.fire('Agregar Testimonio', 'El nombre de usuario es obligatorio', 'warning');
         $('#txtcliente').focus();
         return;
     }
-    if ($('#txtcomentario').val() === '') {
+    if ($('#txtcomentario').val().trim() === '') {
         Swal.fire('Agregar Testimonio', 'El testimonio es obligatorio', 'warning');
         $('#txtcomentario').focus();
         return;
@@ -226,17 +226,17 @@ function limpiarModal() {
 }
 
 function editar() {
-    if ($('#txttitulos').val() === '') {
+    if ($('#txttitulos').val().trim() === '') {
         Swal.fire('Guardar Testimonio', 'El título es obligatorio', 'warning');
         $('#txttitulos').focus();
         return;
     }
-    if ($('#txttituloresaltado').val() === '') {
+    if ($('#txttituloresaltado').val().trim() === '') {
         Swal.fire('Guardar Testimonio', 'El título subrayado es obligatorio', 'warning');
         $('#txttituloresaltado').focus();
         return;
     }
-    if ($('#txtdetalles').val() === '') {
+    if ($('#txtdetalles').val().trim() === '') {
         Swal.fire('Guardar Testimonio', 'El detalle es obligatorio', 'warning');
         $('#txtdetalles').focus();
         return;
