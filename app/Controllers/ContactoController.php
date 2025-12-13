@@ -96,8 +96,8 @@ class ContactoController extends Controller
             $mail->Port = 465;
 
             $mail->CharSet = 'UTF-8';
-            $mail->setFrom('contacto@shilouestetica.com', 'Web Shilou');
-            $mail->addAddress('contacto@shilouestetica.com');
+            $mail->setFrom('contacto@shilouestetica.com', 'Shilou');
+            $mail->addAddress('contacto@shilouestetica.com', 'Shilou');
 
             $mail->isHTML(true);
             $mail->Subject = 'Nueva consulta desde la web';

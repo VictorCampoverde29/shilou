@@ -125,18 +125,18 @@ class LoginController extends Controller
 
         try {
             $mail->isSMTP();
-            $mail->Host = 'mail.grupoasiu.com';
+            $mail->Host = 'mail.shilouestetica.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'electronico@grupoasiu.com';
-            $mail->Password = 'canelita24.';
+            $mail->Username = 'contacto@shilouestetica.com';
+            $mail->Password = 'shilou11122025';
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
             $mail->CharSet = 'UTF-8';
             $mail->Encoding = 'base64';
 
-            $mail->setFrom('sistemas@grupoasiu.com', 'Sistemas Grupo Asiu');
-            $mail->addAddress($correo, 'Usuario Grupo Asiu');
-            $mail->addReplyTo('sistemas@grupoasiu.com', 'Sistemas Grupo Asiu');
+            $mail->setFrom('contacto@shilouestetica.com', 'Shilou');
+            $mail->addAddress($correo, 'contacto@shilouestetica.com');
+            $mail->addReplyTo('contacto@shilouestetica.com', 'Shilou');
 
             $mail->Subject = "CREDENCIALES DE ACCESO A SISTEMA SHILOU - " . date('Y-m-d H:i');
 
