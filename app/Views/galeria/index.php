@@ -11,7 +11,6 @@ Shilou | Galería
   #contenedorCards .card-body img.img-fluid {
     width: 220px;
     height: 250px;
-    /* Ajusta aquí la altura */
     background: #fff;
     border: 2px solid #c89b5a;
     border-radius: 8px;
@@ -109,7 +108,7 @@ Shilou | Galería
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
           <h5 class="card-title">Catalogo</h5>
-          <button type="button" class="btn btn-default" onclick="abrirModal()">+ Nuevo Card</button>
+          <button type="button" class="btn btn-info btn-sm" onclick="abrirModal()">+ NUEVO CARD</button>
         </div>
       </div>
       <div class="card-body">
@@ -176,7 +175,7 @@ Shilou | Galería
     </div>
   </div>
 </div>
-<!------------------------------------------------- MODAL NUEVO DETALLE SERVICIO -------------------------------------------------------------->
+<!------------------------------------------------- MODAL IMAGENES LOCALES -------------------------------------------------------------->
 <div class="modal fade" id="mdlGaleriaLocal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalDefaultLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">

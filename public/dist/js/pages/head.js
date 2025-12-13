@@ -54,6 +54,8 @@ function limpiar() {
     $('#txtdetalles').val('');
     $('#txtdireccion').val('');
     $('#txttelefono').val('');
+    $('#txttituloresaltado').val('');
+    $('#txttitulo2').val('');
 }
 
 function editar() {

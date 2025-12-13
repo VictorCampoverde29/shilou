@@ -35,7 +35,7 @@ Shilou | Head
           <div class="col-12 col-sm-4">
             <div class="form-group">
               <label for="txttitulos"> Título:</label>
-              <input type="text" class="form-control" autocomplete="off" placeholder="Título de la Galería" id="txttitulos">
+              <input type="text" class="form-control" autocomplete="off" placeholder="Título del Head" id="txttitulos">
             </div>
           </div>
           <div class="col-12 col-sm-4">
@@ -55,7 +55,7 @@ Shilou | Head
           <div class="col-12 col-sm-12">
             <div class="form-group">
               <label for="txtdetalles"> Detalle:</label>
-              <textarea class="form-control mb-3" id="txtdetalles" autocomplete="off" placeholder="Detalle de la Galería"></textarea>
+              <textarea class="form-control mb-3" id="txtdetalles" autocomplete="off" placeholder="Detalle del Head"></textarea>
             </div>
           </div>
         </div>
@@ -93,7 +93,6 @@ Shilou | Head
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
           <h5 class="card-title">Detalle</h5>
-          <button type="button" class="btn btn-default" onclick="abrirModal()">+ Nuevo Card</button>
         </div>
       </div>
       <div class="card-body">
@@ -102,7 +101,7 @@ Shilou | Head
           <div class="col-12 col-sm-12">
             <div class="form-group">
               <label for="txttitulosdet"> Título:</label>
-              <input type="text" class="form-control" autocomplete="off" placeholder="Título de la Galería" id="txttitulosdet">
+              <input type="text" class="form-control" autocomplete="off" placeholder="Título del Head" id="txttitulosdet" name="txttitulosdet">
             </div>
           </div>
         </div>
@@ -110,18 +109,18 @@ Shilou | Head
           <div class="col-12 col-sm-12">
             <div class="form-group">
               <label for="txtdetallesdet"> Detalle:</label>
-              <textarea class="form-control mb-3" id="txtdetallesdet" autocomplete="off" placeholder="Detalle de la Galería"></textarea>
+              <textarea class="form-control mb-3" id="txtdetallesdet" autocomplete="off" placeholder="Detalle del Head"></textarea>
             </div>
           </div>
         </div>
         <div class="row mb-3">
           <div class="col-12 col-sm-12">
             <div class="mt-2">
-              <div class="btn btn-success" onclick="editarDetalle()">
+              <div class="btn btn-success btn-flat" onclick="editarDetalle()">
                 <i class="fas fa-save fa-lg mr-2"></i>
                 Guardar
               </div>
-              <div class="btn btn-default" onclick="limpiarDetalle()">
+              <div class="btn btn-default btn-flat" onclick="limpiarDetalle()">
                 <i class="fas fa-eraser fa-lg mr-2"></i>
                 Limpiar
               </div>

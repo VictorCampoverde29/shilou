@@ -338,6 +338,11 @@ function registrarDetalle() {
         $('#txtdetalle').focus();
         return;
     }
+    if ($('#txttitulo').val().trim() === '') {
+        Swal.fire('Agregar Galería', 'El Título es obligatorio', 'warning');
+        $('#txttitulo').focus();
+        return;
+    }
     const extensionesValidas = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'];
     const nombre = $('#txtdetalle').val();
     const extension = nombre.split('.').pop().toLowerCase();
