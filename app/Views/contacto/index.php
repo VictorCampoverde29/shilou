@@ -35,7 +35,7 @@ Shilou | Contacto
           <div class="col-12 col-sm-6">
             <div class="form-group">
               <label for="txttitulos"> Título:</label>
-              <input type="text" class="form-control" autocomplete="off" placeholder="Título de la Galería" id="txttitulos">
+              <input type="text" class="form-control" autocomplete="off" placeholder="Título del Contacto" id="txttitulos">
             </div>
           </div>
           <div class="col-12 col-sm-6">
@@ -49,7 +49,7 @@ Shilou | Contacto
           <div class="col-12 col-sm-12">
             <div class="form-group">
               <label for="txtdetalles"> Detalle:</label>
-              <textarea class="form-control mb-3" id="txtdetalles" autocomplete="off" placeholder="Detalle de la Galería"></textarea>
+              <textarea class="form-control mb-3" id="txtdetalles" autocomplete="off" placeholder="Detalle del Contacto"></textarea>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@ Shilou | Contacto
           <div class="col-12 col-sm-12">
             <div class="form-group">
               <label for="txtdireccion"> Dirección:</label>
-              <input type="text" class="form-control" id="txtdireccion" autocomplete="off" placeholder="Dirección de contacto">
+              <input type="text" class="form-control" id="txtdireccion" autocomplete="off" placeholder="Dirección del Contacto">
             </div>
           </div>
         </div>

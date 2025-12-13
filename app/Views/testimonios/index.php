@@ -35,13 +35,13 @@ Shilou | Testimonios
           <div class="col-12 col-sm-6">
             <div class="form-group">
               <label for="txttitulos"> Título:</label>
-              <input type="text" class="form-control" autocomplete="off" placeholder="Título de la Galería" id="txttitulos">
+              <input type="text" class="form-control" autocomplete="off" placeholder="Título del Testimonio" id="txttitulos">
             </div>
           </div>
           <div class="col-12 col-sm-6">
             <div class="form-group">
               <label for="txttituloresaltado"> Título Subrayado:</label>
-              <input type="text" class="form-control" id="txttituloresaltado" autocomplete="off" placeholder="Título Subrayado de la Galería">
+              <input type="text" class="form-control" id="txttituloresaltado" autocomplete="off" placeholder="Título Subrayado del Testimonio">
             </div>
           </div>
         </div>
@@ -49,7 +49,7 @@ Shilou | Testimonios
           <div class="col-12 col-sm-12">
             <div class="form-group">
               <label for="txtdetalles"> Detalle:</label>
-              <textarea class="form-control mb-3" id="txtdetalles" autocomplete="off" placeholder="Detalle de la Galería"></textarea>
+              <textarea class="form-control mb-3" id="txtdetalles" autocomplete="off" placeholder="Detalle del Testimonio"></textarea>
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@ Shilou | Testimonios
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
           <h5 class="card-title">Testimonios de los Clientes</h5>
-          <button type="button" class="btn btn-default" onclick="abrirModal()">+ Nuevo Testimonio</button>
+          <button type="button" class="btn btn-success btn-sm" onclick="abrirModal()">+ NUEVO TESTIMONIO</button>
         </div>
       </div>
       <div class="card-body">
@@ -90,12 +90,12 @@ Shilou | Testimonios
   </section>
   <!-- /.content -->
 </div>
-<!------------------------------------------------- MODAL NUEVO DETALLE SERVICIO -------------------------------------------------------------->
+<!------------------------------------------------- MODAL NUEVO TESTIMONIO -------------------------------------------------------------->
 <div class="modal fade" id="mdldetalle" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalDefaultLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header" style="background: rgba(249, 245, 240, 0.9);">
-        <h4 class="modal-title" id="modalDefaultLabel">Agregar nuevo Card</h4>
+        <h4 class="modal-title" id="modalDefaultLabel">Agregar nuevo Testimonio</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="38" height="38"><circle cx="19" cy="19" r="19" fill="%23c89b5a"/><text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="22" font-family="Arial" font-weight="700">S</text></svg>'>
+  <link rel="icon" href="<?= base_url('public/dist/img/shilourec.png') ?>" type="image/png">
   <title>Shilou Estética Médica | Tratamientos Estéticos en Chiclayo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Centro de estética médica en Chiclayo. Botox, rinomodelación, aumento de glúteos, reducción de medidas y más. Agenda tu cita: +51 902 597 938">
@@ -16,10 +16,8 @@
   <!-- NAVBAR -->
   <header class="nav">
     <div class="container nav-inner">
-      <a href="<?= base_url('head/index') ?>" class="logo">
-        <div class="logo-icon">S</div>
-        <span class="logo-text">SHILOU</span>
-        <span class="logo-sub">Estética Médica</span>
+      <a href="#inicio" class="logo" style="display: flex; flex-direction: row; align-items: center; gap: 10px;">
+        <img src="<?= base_url('public/dist/img/shilourec.png') ?>" alt="Shilou Estética Médica" style="height: 68px; width: auto; display: block; margin-left: 20px; margin-right: 90px;"/>
       </a>
 
       <nav class="nav-links">

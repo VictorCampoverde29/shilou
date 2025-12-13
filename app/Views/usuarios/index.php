@@ -40,7 +40,7 @@ Shilou | Usuarios
           <table class="table table-bordered table-striped table-sm" id="tblusuarios" style="width:100%">
             <thead class="bg-dark">
               <tr>
-                <th>USUARIOS</th>
+                <th>NOMBRE</th>
                 <th>CORREO</th>
                 <th>PERFIL</th>
                 <th>ESTADO</th>
@@ -57,6 +57,63 @@ Shilou | Usuarios
     <!-- /.card -->
   </section>
   <!-- /.content -->
+</div>
+<!------------------------------------------------- MODAL NUEVO DETALLE SERVICIO -------------------------------------------------------------->
+<div class="modal fade" id="mdlusuarios" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalDefaultLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background: rgba(249, 245, 240, 0.9);">
+        <h4 class="modal-title" id="modalDefaultLabel">Registrar nuevo Usuario</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" class="form-control" id="txtid">
+        <div class="form-group">
+          <label for="txtnombre"> Nombre:</label>
+          <input type="text" class="form-control" id="txtnombre" placeholder="Nombre del Usuario" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="txtcontra"> Contraseña:</label>
+          <input type="password" class="form-control" id="txtcontra" autocomplete="off" placeholder="Contraseña del Usuario">
+        </div>
+        <div class="form-group">
+          <label for="txtcorreo"> Correo Electrónico:</label>
+          <input type="email" class="form-control" id="txtcorreo" autocomplete="off" placeholder="Correo Electrónico del Usuario">
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <div class="form-group">
+              <label for="txtperfil"> Perfil:</label>
+              <select class="form-control" id="txtperfil">
+                <option value="EDITOR">EDITOR</option>
+                <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="form-group">
+              <label for="txtperfil"> Estado:</label>
+              <select class="form-control" id="txtestado">
+                <option value="ACTIVO">ACTIVO</option>
+                <option value="INACTIVO">INACTIVO</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
+        <button type="button" id="btnregistrar" name="btnregistrar" class="btn btn-primary mr-2" onclick="registrar()">
+          <i class="fas fa-plus"></i> Registrar
+        </button>
+        <button type="button" id="btneditar" name="btneditar" class="btn btn-warning mr-2" onclick="editar()">
+          <i class="fas fa-pencil-alt"></i> Editar
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 <?= $this->endSection(); ?>
 

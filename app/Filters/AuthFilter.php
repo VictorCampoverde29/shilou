@@ -31,30 +31,15 @@ class AuthFilter implements FilterInterface
             return redirect()->route('login');
         }
 
-        // $uri = service('uri');
-        // $routePath = implode('/', $uri->getSegments());
-        // //log_message('error','variable routepath:'.$routePath); 
-
-        // $perfil = session()->get('perfil');
-        // $barrasperfil=new BarrasPerfilModel();
-        // $urls = $barrasperfil->geturlsxperfil($perfil); 
-       
-       
-        // $matchingItems = array_filter($urls, function ($menuItem) use ($routePath) {
-        //     // log_message('error','variable array:'.$menuItem['ruta_ci']);
-        //     return $menuItem['ruta_ci'] == $routePath;
-           
-        // });
-
-     
-        // if ($routePath !== 'dashboard' && $routePath!=='') {
-
-        //     if (empty($matchingItems)) {
-        //             return redirect()->to('login/unauthorized');
-        //     }
-        // }
-
-        // $acceso = 'NO'; // Valor inicial
+        // Bloqueo de acceso a usuarios/index para perfiles distintos de 'admin'
+        $uri = service('uri');
+        $routePath = implode('/', $uri->getSegments());
+        if ($routePath === 'usuarios/index') {
+            $perfil = session()->get('perfil');
+            if ($perfil !== 'ADMINISTRADOR') {
+                return redirect()->to('login/unauthorized');
+            }
+        }
 
     }
 

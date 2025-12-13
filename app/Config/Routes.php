@@ -70,9 +70,11 @@ $routes->group('head', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->post('editar_detalle', 'HeadController::updateDetalle');
 });
 
-
 $routes->group('usuarios', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('index', 'UsuariosController::index');
-    $routes->get('obtener_usuarios', 'UsuariosController::getAllUsers');
+    $routes->get('obtener_usuarios', 'UsuariosController::getUsuarios');
+    $routes->get('obtener_usuario', 'UsuariosController::usuariosXcod');
+    $routes->post('registrar', 'UsuariosController::insertar');
+    $routes->post('editar', 'UsuariosController::update');
 });
 

@@ -20,6 +20,12 @@ class LoginController extends Controller
         return view('login/index', $data);
     }
 
+    public function unauthorized()
+    {
+        $data['version']= env('VERSION');
+        return view('login/unauthorized',$data);
+    }
+
     public function salir()
     {
         $session = session();
@@ -53,6 +59,8 @@ class LoginController extends Controller
                     'nombrepersonal' => $userData['nombre'],
                     'codusuario' => $userData['idusuario'],
                     'password' => $clave,
+                    'perfil' => $userData['perfil'],
+                    'correo' => $userData['correo'],
                     'is_logged' => true
                 ]);
                 return $this->response->setJSON([

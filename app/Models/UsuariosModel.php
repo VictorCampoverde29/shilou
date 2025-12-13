@@ -43,10 +43,24 @@ class UsuariosModel extends Model
                      ->first();        
         return $user; 
     }
-    public function getAllUsers()
+    public function getUsuarios()
     {
         return $this->select('idusuario, nombre, correo, perfil, estado')
                     ->findAll();
+    }
+    public function usuariosXcod($cod)
+    {
+        return $this->select('idusuario, nombre, correo, perfil, estado')
+            ->where('idusuario', $cod)
+            ->first();
+    }
+    public function exists($nombre, $id = null)
+    {
+        $query = $this->where('nombre', $nombre);
+        if ($id !== null) {
+            $query->where('idusuario !=', $id);
+        }
+        return $query->first() !== null;
     }
 }
 
