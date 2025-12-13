@@ -1,8 +1,8 @@
 function loguear(token) {
     var clave = $('#txtpassword').val().trim();
     var usuario = $('#txtusuario').val();
+    var $btn = $('.g-recaptcha');
 
-    // Validaciones antes de enviar la petición
     if (usuario === '' || usuario === null) {
         Swal.fire({
             icon: "error",
@@ -28,6 +28,17 @@ function loguear(token) {
         return;
     }
 
+    $btn.prop('disabled', true).addClass('btn-disabled');
+    Swal.fire({
+        title: 'Iniciando sesión...',
+        text: 'Por favor espera un momento.',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
     var parametros = $.param({ clave: clave, usuario: usuario, recaptcha: token });
     const url = baseURL + 'login/login';
 
@@ -37,6 +48,8 @@ function loguear(token) {
         data: parametros,
         dataType: "json",
         success: function(response) {
+            $btn.prop('disabled', false).removeClass('btn-disabled');
+            Swal.close();
             if (response.mensaje) {
                 Swal.fire({
                     icon: "error",
@@ -44,10 +57,12 @@ function loguear(token) {
                     text: response.mensaje
                 });
             } else {
-                window.location.href = baseURL + 'dashboard';  // Redirige correctamente
+                window.location.href = baseURL + 'head/index';
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            $btn.prop('disabled', false).removeClass('btn-disabled');
+            Swal.close();
             Swal.fire({
                 icon: "error",
                 title: "ERROR EN LA PETICIÓN",

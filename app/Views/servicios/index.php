@@ -70,7 +70,7 @@ Shilou | Servicios
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
           <h5 class="card-title">Detalle Servicios</h5>
-          <button type="button" class="btn btn-default" onclick="abrirModal()">+ Nuevo Card</button>
+          <button type="button" class="btn btn-default btn-sm" style="background: #c89b5a; color: #fff;" onclick="abrirModal()">+ NUEVO CARD</button>
         </div>
       </div>
       <div class="card-body">

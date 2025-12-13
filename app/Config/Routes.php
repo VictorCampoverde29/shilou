@@ -20,10 +20,10 @@ $routes->group('acceso', ['filter' => 'CambioFilter'], function ($routes) {
     $routes->post('clave', 'LoginController::changePassword');
 });
 
-$routes->group('dashboard', ['filter' => 'AuthFilter'], function ($routes) {
-    $routes->get('/', 'Home::index');
-    $routes->get('index', 'Home::index');
-});
+// $routes->group('dashboard', ['filter' => 'AuthFilter'], function ($routes) {
+//     $routes->get('/', 'Home::index');
+//     $routes->get('index', 'Home::index');
+// });
 
 $routes->group('servicios', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('index', 'ServiciosController::index');
@@ -68,5 +68,11 @@ $routes->group('head', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('obtener_areas', 'HeadController::obtenerAreas');
     $routes->post('editar', 'HeadController::update');
     $routes->post('editar_detalle', 'HeadController::updateDetalle');
+});
+
+
+$routes->group('usuarios', ['filter' => 'AuthFilter'], function ($routes) {
+    $routes->get('index', 'UsuariosController::index');
+    $routes->get('obtener_usuarios', 'UsuariosController::getAllUsers');
 });
 

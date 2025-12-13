@@ -13,7 +13,7 @@ class LoginController extends Controller
     {
         $session = session();
         if ($session->get('is_logged')) {
-            return redirect()->to('/dashboard');
+            return redirect()->to('/head/index');
         }
         $data['version'] = env('VERSION');
         $data['recaptcha_site_key'] = env('RECAPTCHA_SITE_KEY');
@@ -75,14 +75,12 @@ class LoginController extends Controller
         $newPassword = $this->request->getPost('np');
         $user = $userModel->getUserData($username);
 
-        // Verificar si la nueva contraseña es igual a la actual
         if (password_verify($newPassword, $user['clave'])) {
             return $this->response->setJSON([
                 'success' => false,
                 'mensaje' => 'La nueva contraseña no puede ser la misma que la actual.'
             ]);
         }
-        // Actualizar la contraseña
         $userModel->updatePassword($username, $newPassword);
         return $this->response->setJSON([
             'success' => true,

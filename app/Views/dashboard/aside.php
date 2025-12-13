@@ -38,6 +38,12 @@
             <p>CONTACTO</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="<?= base_url('usuarios/index') ?>" class="nav-link">
+            <i class="fas fa-users nav-icon"></i>
+            <p>USUARIOS</p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

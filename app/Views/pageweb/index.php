@@ -16,7 +16,7 @@
   <!-- NAVBAR -->
   <header class="nav">
     <div class="container nav-inner">
-      <a href="<?= base_url('dashboard') ?>" class="logo">
+      <a href="<?= base_url('head/index') ?>" class="logo">
         <div class="logo-icon">S</div>
         <span class="logo-text">SHILOU</span>
         <span class="logo-sub">Estética Médica</span>

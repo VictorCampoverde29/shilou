@@ -7,44 +7,46 @@ class UsuariosModel extends Model
 {
     protected $table      = 'usuario';
     protected $primaryKey = 'idusuario';
-    protected $allowedFields = ['idusuario', 'nombre', 'clave', 'correo'];
+    protected $allowedFields = ['idusuario', 'nombre', 'clave', 'correo', 'perfil', 'estado'];
 
     public function getUser($usuario, $clave)
     {
-        // Obtener el usuario desde la base de datos
-        $user = $this->select('idusuario, nombre, clave, correo')
+        $user = $this->select('idusuario, nombre, clave, correo, perfil, estado')
+                     ->where('estado', 'ACTIVO')
                      ->where('nombre', $usuario)
                      ->first();        
-        // Verificar si el usuario fue encontrado
         if ($user) {
             $passwordCheck = password_verify($clave, $user['clave']);            
             if ($passwordCheck) {
-                return $user; // La contraseña es correcta
+                return $user;
             }
         }        
-        return null; // Usuario desactivado o contraseña incorrecta
+        return null;
     } 
     public function getCredenciales($usuario, $correo)
     {
-        // Busca el usuario por nombre y valida que el correo le pertenezca
-        return $this->select('idusuario, nombre, correo')
+        return $this->select('idusuario, nombre, correo, perfil, estado')
+                    ->where('estado', 'ACTIVO')
                     ->where('nombre', $usuario)
                     ->where('correo', $correo)
                     ->first();
     }
-
     public function updatePassword($idusuario, $newPassword)
     {
-        // Encripta la nueva contraseña antes de guardar
         $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
         return $this->update($idusuario, ['clave' => $hashed]);
     }
     public function getUserData($usuario)
     {
-        // Obtener el usuario desde la base de datos
         $user = $this->where('idusuario', $usuario)
+                     ->where('estado', 'ACTIVO')
                      ->first();        
         return $user; 
+    }
+    public function getAllUsers()
+    {
+        return $this->select('idusuario, nombre, correo, perfil, estado')
+                    ->findAll();
     }
 }
 

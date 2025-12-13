@@ -108,25 +108,34 @@ function limpiarDetalle(idx) {
     $(`#titulo-${idx}`).val('');
     $(`#icono-${idx}`).val('');
     $(`#detalle-${idx}`).val('');
+    $(`#icono-preview-${idx}`).html('');
+}
+
+function limpiarModal() {
+    $(`#txttitulosdet`).val('');
+    $(`#txticonosvg`).val('');
+    $(`#txtdetallesdet`).val('');
 }
 
 function abrirModal() {
+    limpiarModal();
     $('#mdldetalle').modal('show');
 }
 
 function registrarDetalle() {
     if ($('#txttitulosdet').val().trim() === '') {
-        Swal.fire('Agregar Servicio', 'El título es obligatorio', 'error');
+        Swal.fire('Agregar Servicio', 'El título es obligatorio', 'warning');
         $('#txttitulosdet').focus();
         return;
     }
     if ($('#txtdetallesdet').val().trim() === '') {
-        Swal.fire('Agregar Servicio', 'El detalle es obligatorio', 'error');
+        Swal.fire('Agregar Servicio', 'El detalle es obligatorio', 'warning');
         $('#txtdetallesdet').focus();
         return;
     }
-    if ($('#txticonosvg').val().trim() === '') {
-        Swal.fire('Agregar Servicio', 'El icono es obligatorio', 'error');
+    var icono = $('#txticonosvg').val().trim();
+    if (icono && icono.indexOf('<svg') === -1) {
+        Swal.fire('Agregar Servicio', 'El icono debe ser un SVG válido', 'warning');
         $('#txticonosvg').focus();
         return;
     }
@@ -173,18 +182,18 @@ function editarDetalle(idx) {
     const detalle = $(`#detalle-${idx}`).val();
     const icono_svg = $(`#icono-preview-${idx}`).html();
 
-    if (titulo || titulo.trim() === '') {
+    if (!titulo || titulo.trim() === '') {
         Swal.fire('Agregar Servicio', 'El título es obligatorio', 'error');
         $(`#titulo-${idx}`).focus();
         return;
     }
-    if (detalle || detalle.trim() === '') {
+    if (!detalle || detalle.trim() === '') {
         Swal.fire('Agregar Servicio', 'El detalle es obligatorio', 'error');
         $(`#detalle-${idx}`).focus();
         return;
     }
-    if (!icono_svg || icono_svg.trim() === '') {
-        Swal.fire('Agregar Servicio', 'El icono es obligatorio', 'error');
+    if (icono_svg && icono_svg.indexOf('<svg') === -1) {
+        Swal.fire('Agregar Servicio', 'El icono debe ser un SVG válido', 'error');
         $(`#icono-${idx}`).focus();
         return;
     }
@@ -195,7 +204,6 @@ function editarDetalle(idx) {
         detalle: detalle,
         icono_svg: icono_svg
     };
-
     $.ajax({
         type: "POST",
         url: baseURL + 'servicios/editar_detalle',
