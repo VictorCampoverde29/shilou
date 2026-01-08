@@ -21,6 +21,9 @@
       </a>
 
       <nav class="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#mision">Mision</a>
+        <a href="#objetivos">Objetivos</a>
         <a href="#servicios">Servicios</a>
         <a href="#galeria">Galería</a>
         <a href="#testimonios">Testimonios</a>
@@ -76,6 +79,99 @@
           <p class="hero-card-body">
             <?= esc($headdetalle['detalle']) ?>
           </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISIÓN Y VISIÓN -->
+  <section id="mision" class="section section-alt">
+    <div class="container">
+      <div class="mision-vision-grid">
+        <div class="mision-vision-card">
+          <div class="mv-icon">🎯</div>
+          <h3>Misión</h3>
+          <p>Brindar tratamientos de estética médica seguros, personalizados y basados en evidencia científica, que realcen la belleza natural y mejoren la confianza de nuestros pacientes, mediante tecnología de vanguardia, profesionales altamente calificados y una atención ética, humana y de excelencia.</p>
+        </div>
+        <div class="mision-vision-card">
+          <div class="mv-icon">✨</div>
+          <h3>Visión</h3>
+          <p>Ser la estética médica premium líder, reconocida por ofrecer experiencias exclusivas, resultados sofisticados y naturales, y un estándar superior de excelencia médica, innovación tecnológica y atención personalizada, convirtiéndonos en un referente de prestigio y confianza.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBJETIVOS ESPECÍFICOS -->
+  <section id="objetivos" class="section" style="background-color: var(--bg);">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-tag">Nuestros Objetivos</span>
+        <h2>Objetivos <span class="text-gold italic">Específicos</span></h2>
+        <p>Comprometidos con la excelencia en cada aspecto de nuestro servicio</p>
+      </div>
+
+      <div class="objetivos-grid">
+        <!-- Clínicos y de calidad -->
+        <div class="objetivo-card">
+          <div class="objetivo-number">1</div>
+          <h4 class="objetivo-titulo">Clínicos y de Calidad</h4>
+          <ul class="objetivo-lista">
+            <li>Garantizar la seguridad del paciente mediante protocolos médicos estrictos y buenas prácticas clínicas.</li>
+            <li>Lograr resultados estéticos naturales que respeten la armonía facial y corporal.</li>
+            <li>Mantener estándares médicos superiores en todos los tratamientos.</li>
+          </ul>
+        </div>
+
+        <!-- Experiencia del paciente -->
+        <div class="objetivo-card">
+          <div class="objetivo-number">2</div>
+          <h4 class="objetivo-titulo">Experiencia del Paciente (Premium)</h4>
+          <ul class="objetivo-lista">
+            <li>Brindar una atención personalizada, confidencial y exclusiva en cada etapa del servicio.</li>
+            <li>Crear una experiencia sensorial y de bienestar que supere las expectativas del paciente.</li>
+            <li>Fomentar relaciones a largo plazo basadas en confianza y satisfacción.</li>
+          </ul>
+        </div>
+
+        <!-- Innovación y tecnología -->
+        <div class="objetivo-card">
+          <div class="objetivo-number">3</div>
+          <h4 class="objetivo-titulo">Innovación y Tecnología</h4>
+          <ul class="objetivo-lista">
+            <li>Incorporar tecnología de vanguardia y tratamientos mínimamente invasivos de última generación.</li>
+            <li>Capacitar continuamente al equipo médico y estético en técnicas avanzadas.</li>
+          </ul>
+        </div>
+
+        <!-- Posicionamiento y marca -->
+        <div class="objetivo-card">
+          <div class="objetivo-number">4</div>
+          <h4 class="objetivo-titulo">Posicionamiento y Marca</h4>
+          <ul class="objetivo-lista">
+            <li>Consolidar una imagen de marca premium, elegante y diferenciada.</li>
+            <li>Ser reconocidos por ética, profesionalismo y resultados de alto nivel.</li>
+          </ul>
+        </div>
+
+        <!-- Crecimiento y sostenibilidad -->
+        <div class="objetivo-card">
+          <div class="objetivo-number">5</div>
+          <h4 class="objetivo-titulo">Crecimiento y Sostenibilidad</h4>
+          <ul class="objetivo-lista">
+            <li>Alcanzar rentabilidad sostenida sin comprometer la calidad ni la exclusividad.</li>
+            <li>Expandir servicios selectivamente manteniendo el estándar premium.</li>
+          </ul>
+        </div>
+
+        <!-- Ética y responsabilidad -->
+        <div class="objetivo-card">
+          <div class="objetivo-number">6</div>
+          <h4 class="objetivo-titulo">Ética y Responsabilidad</h4>
+          <ul class="objetivo-lista">
+            <li>Promover una estética médica responsable, honesta y centrada en el bienestar integral del paciente.</li>
+            <li>Cumplir y superar las normativas sanitarias y éticas vigentes.</li>
+          </ul>
         </div>
       </div>
     </div>

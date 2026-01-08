@@ -701,3 +701,170 @@ body {
   height: 100%;
   display: block;
 }
+
+/* MISIÓN Y VISIÓN */
+.mision-vision-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.mision-vision-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fefdfb 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mision-vision-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
+}
+
+.mision-vision-card .mv-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.mision-vision-card h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+
+.mision-vision-card p {
+  color: var(--text-soft);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  .mision-vision-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .mision-vision-card {
+    padding: 24px;
+  }
+
+  .mision-vision-card h3 {
+    font-size: 20px;
+  }
+
+  .mision-vision-card .mv-icon {
+    font-size: 40px;
+  }
+}
+
+/* OBJETIVOS ESPECÍFICOS */
+.objetivos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 40px;
+}
+
+.objetivo-card {
+  background: #ffffff;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-soft);
+}
+
+.objetivo-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px rgba(200, 155, 90, 0.15);
+}
+
+.objetivo-number {
+  position: absolute;
+  top: -14px;
+  left: 28px;
+  width: 40px;
+  height: 40px;
+  background: var(--primary);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.objetivo-titulo {
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  padding-top: 12px;
+  border-top: 2px solid var(--primary);
+}
+
+.objetivo-lista {
+  list-style: none;
+  padding: 0;
+}
+
+.objetivo-lista li {
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.objetivo-lista li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.objetivo-lista li:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  .objetivos-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .objetivos-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .objetivo-card {
+    padding: 24px;
+  }
+
+  .objetivo-titulo {
+    font-size: 15px;
+  }
+
+  .objetivo-lista li {
+    font-size: 13px;
+  }
+}
