@@ -112,62 +112,95 @@ document.addEventListener('DOMContentLoaded', function () {
   const galleryGrid = document.getElementById('galleryGrid');
   if (!galleryGrid) return;
   const galleryItems = Array.from(galleryGrid.querySelectorAll('.gallery-item'));
-  let start = 0;
-  let autoInterval;
+  let currentBlock = 0; // bloque inicial
 
-  function getVisibleCount() {
-    return window.innerWidth <= 960 ? 1 : 4;
+  // Flechas
+  let prevBtn = document.getElementById('galleryPrev');
+  let nextBtn = document.getElementById('galleryNext');
+  if (!prevBtn || !nextBtn) {
+    // Crear flechas si no existen
+    const wrapper = document.querySelector('.gallery-wrapper');
+    if (wrapper) {
+      prevBtn = document.createElement('button');
+      prevBtn.id = 'galleryPrev';
+      prevBtn.className = 'gallery-arrow';
+      prevBtn.innerHTML = '&#8592;';
+      nextBtn = document.createElement('button');
+      nextBtn.id = 'galleryNext';
+      nextBtn.className = 'gallery-arrow';
+      nextBtn.innerHTML = '&#8594;';
+      wrapper.appendChild(prevBtn);
+      wrapper.appendChild(nextBtn);
+    }
   }
 
-  function getAutoTime() {
-    return window.innerWidth <= 960 ? 3000 : 1800;
+  function getColsAndRows() {
+    if (window.innerWidth <= 960) return {cols: 1, rows: 1};
+    return {cols: 4, rows: 2};
+  }
+
+  function getTotalBlocks() {
+    const {cols, rows} = getColsAndRows();
+    return Math.ceil(galleryItems.length / (cols * rows));
   }
 
   function updateCarousel() {
-    const visible = getVisibleCount();
-    const itemWidth = galleryItems[0].offsetWidth;
-    const gap = 0.7 * 16;
-    galleryGrid.style.transform = `translateX(-${start * (itemWidth + gap)}px)`;
+    const {cols, rows} = getColsAndRows();
+    const blockSize = cols * rows;
+    const totalBlocks = getTotalBlocks();
+    if (currentBlock >= totalBlocks) currentBlock = 0;
+    // Oculta todos
+    galleryItems.forEach(item => item.style.display = 'none');
+    // Muestra solo el bloque actual
+    const start = currentBlock * blockSize;
+    const end = start + blockSize;
+    for (let i = start; i < end && i < galleryItems.length; i++) {
+      galleryItems[i].style.display = '';
+    }
+    // Flechas
+    if (prevBtn && nextBtn) {
+      prevBtn.style.display = totalBlocks > 1 ? '' : 'none';
+      nextBtn.style.display = totalBlocks > 1 ? '' : 'none';
+      prevBtn.disabled = currentBlock === 0;
+      nextBtn.disabled = currentBlock === totalBlocks - 1;
+    }
   }
 
   function nextSlide() {
-    const visible = getVisibleCount();
-    if (start + visible < galleryItems.length) {
-      start++;
+    const totalBlocks = getTotalBlocks();
+    if (currentBlock + 1 < totalBlocks) {
+      currentBlock++;
     } else {
-      start = 0;
+      currentBlock = 0;
     }
     updateCarousel();
   }
 
-  function startAuto() {
-    clearInterval(autoInterval);
-    autoInterval = setInterval(nextSlide, getAutoTime());
-  }
-
-  function resetAuto() {
-    clearInterval(autoInterval);
-    startAuto();
+  function prevSlide() {
+    const totalBlocks = getTotalBlocks();
+    if (currentBlock > 0) {
+      currentBlock--;
+    } else {
+      currentBlock = totalBlocks - 1;
+    }
+    updateCarousel();
   }
 
   window.addEventListener('resize', function () {
-    const visible = getVisibleCount();
-    if (start > galleryItems.length - visible) {
-      start = Math.max(0, galleryItems.length - visible);
-    }
+    currentBlock = 0;
     updateCarousel();
-    resetAuto();
   });
+
+  if (nextBtn && prevBtn) {
+    nextBtn.addEventListener('click', function () {
+      nextSlide();
+    });
+    prevBtn.addEventListener('click', function () {
+      prevSlide();
+    });
+  }
 
   updateCarousel();
-  startAuto();
-
-  galleryItems.forEach(item => {
-    item.addEventListener('click', function () {
-      clearInterval(autoInterval);
-      setTimeout(startAuto, 3000);
-    });
-  });
 });
 
 function enviarConsulta() {

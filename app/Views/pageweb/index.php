@@ -235,8 +235,139 @@
     </div>
   </section>
 
+  <!-- ARTISTAS QUE NOS RECOMIENDAN -->
+  <section id="artistas" class="section section-alt">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-tag">Recomendaciones VIP</span>
+        <h2>Artistas que <span class="text-gold italic">nos Recomiendan</span></h2>
+        <p>Conoce los saludos y recomendaciones de personalidades y artistas que confían en Shilou Estética Médica.</p>
+      </div>
+      <div class="videos-carousel-wrapper" style="position:relative;max-width:900px;margin:0 auto;">
+        <!-- El contenedor de flechas móviles solo se crea por JS debajo del video -->
+        <button id="videosPrev" class="gallery-arrow videos-arrow-mob" style="left:-60px;top:45%;background:#fff;color:var(--primary);border:2px solid var(--primary);"><span style="font-size:2rem;">&#8592;</span></button>
+        <div class="videos-carousel-grid" id="videosCarouselGrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;align-items:center;justify-content:center;">
+          <div class="video-card"><video controls poster="<?= base_url('public/dist/videos/IMG_8004.JPG') ?>" style="width:100%;border-radius:16px;box-shadow:0 6px 16px rgba(15,23,42,0.07);background:#000;"><source src="<?= base_url('public/dist/videos/IMG_3250.MP4') ?>" type="video/mp4">Tu navegador no soporta el video.</video></div>
+          <div class="video-card"><video controls style="width:100%;border-radius:16px;box-shadow:0 6px 16px rgba(15,23,42,0.07);background:#000;"><source src="<?= base_url('public/dist/videos/IMG_3269.MP4') ?>" type="video/mp4">Tu navegador no soporta el video.</video></div>
+          <div class="video-card"><video controls style="width:100%;border-radius:16px;box-shadow:0 6px 16px rgba(15,23,42,0.07);background:#000;"><source src="<?= base_url('public/dist/videos/IMG_5674.MOV') ?>" type="video/mp4">Tu navegador no soporta el video.</video></div>
+          <div class="video-card"><video controls style="width:100%;border-radius:16px;box-shadow:0 6px 16px rgba(15,23,42,0.07);background:#000;"><source src="<?= base_url('public/dist/videos/IMG_7834.MP4') ?>" type="video/mp4">Tu navegador no soporta el video.</video></div>
+          <div class="video-card"><video controls style="width:100%;border-radius:16px;box-shadow:0 6px 16px rgba(15,23,42,0.07);background:#000;"><source src="<?= base_url('public/dist/videos/IMG_7935.MP4') ?>" type="video/mp4">Tu navegador no soporta el video.</video></div>
+          <div class="video-card"><video controls style="width:100%;border-radius:16px;box-shadow:0 6px 16px rgba(15,23,42,0.07);background:#000;"><source src="<?= base_url('public/dist/videos/IMG_7960.MP4') ?>" type="video/mp4">Tu navegador no soporta el video.</video></div>
+          <div class="video-card"><video controls style="width:100%;border-radius:16px;box-shadow:0 6px 16px rgba(15,23,42,0.07);background:#000;"><source src="<?= base_url('public/dist/videos/IMG_8018.MP4') ?>" type="video/mp4">Tu navegador no soporta el video.</video></div>
+        </div>
+        <button id="videosNext" class="gallery-arrow videos-arrow-mob" style="right:-60px;top:45%;background:#fff;color:var(--primary);border:2px solid var(--primary);"><span style="font-size:2rem;">&#8594;</span></button>
+      </div>
+    </div>
+  </section>
+<script>
+// Carrusel de videos artistas
+document.addEventListener('DOMContentLoaded', function () {
+
+  // Agrupación por orientación
+  const videosVerticales = [
+    'IMG_3250.MP4',
+    'IMG_3269.MP4',
+    'IMG_5674.MOV',
+    'IMG_7935.MP4',
+    'IMG_7960.MP4',
+    'IMG_7834.MP4',
+    'IMG_8018.MP4',
+  ];
+  const videosHorizontales = [
+    
+  ];
+  const poster = 'IMG_8004.JPG';
+  const grid = document.getElementById('videosCarouselGrid');
+  const prevBtn = document.getElementById('videosPrev');
+  const nextBtn = document.getElementById('videosNext');
+  let page = 0;
+  let grupoActual = 'vertical'; // 'vertical' o 'horizontal'
+
+  function getVisibleCount() {
+    return window.innerWidth <= 900 ? 1 : 2;
+  }
+
+  function getVideosGrupo() {
+    return grupoActual === 'vertical' ? videosVerticales : videosHorizontales;
+  }
+
+  function renderVideos() {
+    const visible = getVisibleCount();
+    const videos = getVideosGrupo();
+    grid.innerHTML = '';
+    const start = page * visible;
+    const end = start + visible;
+    for (let i = start; i < end && i < videos.length; i++) {
+      grid.innerHTML += `<div class='video-card'><video controls ${(i===0&&grupoActual==='vertical')?`poster='${baseURL}public/dist/videos/${poster}'`:''} class='video-responsive'><source src='${baseURL}public/dist/videos/${videos[i]}' type='video/mp4'>Tu navegador no soporta el video.</video></div>`;
+    }
+    const arrowsMobile = document.querySelector('.videos-arrows-mobile');
+    if (window.innerWidth <= 900) {
+      arrowsMobile.style.display = 'flex';
+      grid.parentNode.insertBefore(arrowsMobile, grid.nextSibling);
+      arrowsMobile.innerHTML = '';
+      if (page > 0 || grupoActual === 'horizontal') {
+        arrowsMobile.appendChild(prevBtn);
+        prevBtn.style.display = 'inline-flex';
+      } else {
+        prevBtn.style.display = 'none';
+      }
+      if ((page + 1) * visible < videos.length || (grupoActual === 'vertical' && end >= videos.length)) {
+        arrowsMobile.appendChild(nextBtn);
+        nextBtn.style.display = 'inline-flex';
+      } else {
+        nextBtn.style.display = 'none';
+      }
+    } else {
+      arrowsMobile.style.display = 'none';
+      prevBtn.style.display = 'block';
+      nextBtn.style.display = 'block';
+      const wrapper = document.querySelector('.videos-carousel-wrapper');
+      if (wrapper && !wrapper.contains(prevBtn)) wrapper.insertBefore(prevBtn, grid);
+      if (wrapper && !wrapper.contains(nextBtn)) wrapper.appendChild(nextBtn);
+    }
+    prevBtn.disabled = page === 0 && grupoActual === 'vertical';
+    nextBtn.disabled = (end >= videos.length && grupoActual === 'horizontal');
+    if (grupoActual === 'vertical' && end >= videos.length) {
+      nextBtn.disabled = false;
+    }
+    if (grupoActual === 'horizontal' && page === 0) {
+      prevBtn.disabled = false;
+    }
+  }
+
+  prevBtn.addEventListener('click', function () {
+    if (page > 0) {
+      page--;
+      renderVideos();
+    } else if (grupoActual === 'horizontal') {
+      grupoActual = 'vertical';
+      page = Math.ceil(videosVerticales.length / getVisibleCount()) - 1;
+      renderVideos();
+    }
+  });
+  nextBtn.addEventListener('click', function () {
+    const visible = getVisibleCount();
+    const videos = getVideosGrupo();
+    if ((page + 1) * visible < videos.length) {
+      page++;
+      renderVideos();
+    } else if (grupoActual === 'vertical') {
+      grupoActual = 'horizontal';
+      page = 0;
+      renderVideos();
+    }
+  });
+  window.addEventListener('resize', function () {
+    page = 0;
+    grupoActual = 'vertical';
+    renderVideos();
+  });
+  renderVideos();
+});
+</script>
+
   <!-- TESTIMONIOS -->
-  <section id="testimonios" class="section section-alt">
+  <section id="testimonios" class="section">
     <div class="container">
       <div class="section-header center">
         <span class="section-tag">Testimonios</span>
@@ -270,7 +401,7 @@
   </section>
 
   <!-- CONTACTO -->
-  <section id="contacto" class="section">
+  <section id="contacto" class="section section-alt">
     <div class="container contact-grid">
       <div>
         <div class="section-header">
