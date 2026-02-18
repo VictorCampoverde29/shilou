@@ -46,7 +46,7 @@
           Por falta de pago.</h1>
         </h1>
         
-        <img src="public/dist/img/don ramon imagen.avif" alt="Pago Pendiente" style="width: 600px; margin-top: 20px;"> 
+        <img src="public/dist/img/don ramon imagen.webp" alt="Pago Pendiente" style="width: 600px; margin-top: 20px;"> 
 
     </div>
 </body>
