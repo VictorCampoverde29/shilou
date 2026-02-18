@@ -32,6 +32,6 @@ class PageController extends Controller
         $contacto = new SeccionAreasModel();
         $data['contacto'] = $contacto->getContacto();
 
-        return view('pageweb/index2', $data);
+        return view('pageweb/index', $data);
     }
 }
